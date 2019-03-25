@@ -127,9 +127,13 @@ var Homepage = function (_React$Component) {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
-        "h1",
+        "div",
         null,
-        "Hello WOrld using React!!"
+        _react2.default.createElement(
+          "h1",
+          null,
+          "Hello WOrld using React!!"
+        )
       );
     }
   }]);
@@ -141,10 +145,10 @@ exports.default = Homepage;
 
 /***/ }),
 
-/***/ "./app/index.js":
-/*!**********************!*\
-  !*** ./app/index.js ***!
-  \**********************/
+/***/ "./app/main.js":
+/*!*********************!*\
+  !*** ./app/main.js ***!
+  \*********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -169,6 +173,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   _react2.default.createElement(
     _reactRouterDom.Switch,
     null,
+    console.log("WE ARE HERE"),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Homepage.HomePage })
   )
 ), document.getElementById("main"));
@@ -39967,14 +39972,14 @@ module.exports = g;
 /***/ }),
 
 /***/ 0:
-/*!**********************************!*\
-  !*** multi babel-polyfill ./app ***!
-  \**********************************/
+/*!***************************************!*\
+  !*** multi babel-polyfill ./app/main ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */"./node_modules/babel-polyfill/lib/index.js");
-module.exports = __webpack_require__(/*! ./app */"./app/index.js");
+module.exports = __webpack_require__(/*! ./app/main */"./app/main.js");
 
 
 /***/ })

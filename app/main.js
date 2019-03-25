@@ -6,6 +6,7 @@ import { HomePage } from "./components/Homepage.js";
 render(
   <HashRouter>
     <Switch>
+      {console.log("WE ARE HERE")}
       <Route exact path="/" component={HomePage} />
     </Switch>
   </HashRouter>,
