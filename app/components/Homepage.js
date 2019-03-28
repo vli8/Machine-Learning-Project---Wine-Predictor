@@ -4,7 +4,7 @@ export default class Homepage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello WOrld using React!!</h1>
+        <h1>React App on Machine Learning</h1>
       </div>
     );
   }
