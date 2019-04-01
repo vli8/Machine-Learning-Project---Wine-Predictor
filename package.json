@@ -1,5 +1,5 @@
 {
-  "name": "ML-WinePredictor",
+  "name": "MachineLearningWinePredictor",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -27,7 +27,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "sequelize": "^5.1.1",
+    "sequelize": "^5.2.8",
     "volleyball": "^1.5.1"
   },
   "devDependencies": {
