@@ -2,7 +2,7 @@ const db = require("./database");
 const Sequelize = require("sequelize");
 
 //defining models
-const Wine = db.define("wine", {
+const Wines = db.define("wine", {
   points: {
     type: Sequelize.STRING,
     allowNull: true
@@ -33,15 +33,18 @@ const Wine = db.define("wine", {
   region_1: {
     type: Sequelize.STRING
   },
+  region_2: {
+    type: Sequelize.STRING
+  },
   province: {
     type: Sequelize.STRING
   },
   country: {
     type: Sequelize.STRING
   },
-  Winery: {
+  winery: {
     type: Sequelize.STRING
   }
 });
 
-module.exports = Wine;
+module.exports = Wines;
