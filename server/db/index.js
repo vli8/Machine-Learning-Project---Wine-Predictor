@@ -47,4 +47,4 @@ const Wines = db.define("wine", {
   }
 });
 
-module.exports = Wines;
+module.exports = { Wines, db };
