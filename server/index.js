@@ -14,14 +14,13 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/api", require("./api"));
 
-let counter = 0;
 const startServerConnectDB = async () => {
   await db.sync({ force: true });
   console.log("db synced");
-  counter === 0 ? await seedDB() : console.log("already seeded");
-  counter++;
+  await seedDB();
+  console.log("seeded!");
   app.listen(PORT, () => {
-    seedDB(), console.log(`Listening on port ${PORT}`);
+    console.log(`Listening on port ${PORT}`);
   });
 };
 
