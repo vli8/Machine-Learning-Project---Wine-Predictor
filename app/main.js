@@ -11,7 +11,6 @@ render(
         <Route exact path="/" component={HomePage} />
       </Switch>
     </HashRouter>
-    ,
   </Provider>,
   document.getElementById("main")
 );
