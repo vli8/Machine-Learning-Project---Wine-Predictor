@@ -12,10 +12,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
+let counter = 0;
 const startServerConnectDB = async () => {
   await db.sync({ force: true });
   console.log("db synced");
-  await seedDB();
+  counter === 0 ? await seedDB() : console.log("already seeded");
+  counter++;
   app.listen(PORT, () => {
     seedDB(), console.log(`Listening on port ${PORT}`);
   });

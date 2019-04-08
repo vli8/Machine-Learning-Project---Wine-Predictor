@@ -3,8 +3,13 @@ const { Wines } = require("./index");
 
 const seed = async () => {
   try {
-    for (wine in wineData) {
-      await Wines.create(wine);
+    // await Promise.all(
+    //   wineData.map(async wine => {
+    //     await Wines.create(wine);
+    //   })
+    // );
+    for (let i = 0; i < 50000; i++) {
+      await Wines.create(wineData[i]);
     }
   } catch (error) {
     console.log("ERROR: ", error);

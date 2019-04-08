@@ -12,7 +12,7 @@ const Wines = db.define("wine", {
     allowNull: true
   },
   description: {
-    type: Sequelize.STRING
+    type: Sequelize.TEXT
   },
   taster_name: {
     type: Sequelize.STRING
