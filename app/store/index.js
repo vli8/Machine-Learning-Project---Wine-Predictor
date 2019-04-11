@@ -2,9 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import loggingMiddleware from "redux-logger";
 import thunkMiddleware from "redux-thunk";
 import axios from "axios";
+import wines from "./wine";
 import { composeWithDevTools } from "redux-devtools-extension";
 
-const reducer = combineReducers({});
+const reducer = combineReducers({ wines });
 const middleware = composeWithDevTools(
   applyMiddleware(
     // `withExtraArgument` gives us access to axios in our async action creators!

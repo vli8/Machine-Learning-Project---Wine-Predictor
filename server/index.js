@@ -21,7 +21,7 @@ app.use((err, req, res, next) => {
 
 const startServerConnectDB = async () => {
   await db.sync({ force: true });
-  console.log("db synced");
+  console.log("db synced, in the process of seeding the db...");
   await seedDB();
   console.log("seeded!");
   app.listen(PORT, () => {

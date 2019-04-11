@@ -106,6 +106,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _wine = __webpack_require__(/*! ../store/wine */ "./app/store/wine.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -141,7 +145,18 @@ var Homepage = function (_React$Component) {
   return Homepage;
 }(_react2.default.Component);
 
-exports.default = Homepage;
+var mapstate = function mapstate(state) {
+  return {
+    wines: state.wines
+  };
+};
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    getWines: dispatch((0, _wine.getAllWines)())
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapstate, mapDispatch)(Homepage);
 
 /***/ }),
 
@@ -169,7 +184,7 @@ var _Homepage2 = _interopRequireDefault(_Homepage);
 
 var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 
-var _store = __webpack_require__(/*! ./store */ "./app/store.js");
+var _store = __webpack_require__(/*! ./store */ "./app/store/index.js");
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -191,10 +206,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 /***/ }),
 
-/***/ "./app/store.js":
-/*!**********************!*\
-  !*** ./app/store.js ***!
-  \**********************/
+/***/ "./app/store/index.js":
+/*!****************************!*\
+  !*** ./app/store/index.js ***!
+  \****************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -219,11 +234,15 @@ var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _wine = __webpack_require__(/*! ./wine */ "./app/store/wine.js");
+
+var _wine2 = _interopRequireDefault(_wine);
+
 var _reduxDevtoolsExtension = __webpack_require__(/*! redux-devtools-extension */ "./node_modules/redux-devtools-extension/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reducer = (0, _redux.combineReducers)({});
+var reducer = (0, _redux.combineReducers)({ wines: _wine2.default });
 var middleware = (0, _reduxDevtoolsExtension.composeWithDevTools)((0, _redux.applyMiddleware)(
 // `withExtraArgument` gives us access to axios in our async action creators!
 // https://github.com/reduxjs/redux-thunk#injecting-a-custom-argument
@@ -242,6 +261,97 @@ exports.default = store;
 //   "province": "Sicily & Sardinia",
 //   "country": "Italy",
 //   "winery": "Nicosia"}
+
+/***/ }),
+
+/***/ "./app/store/wine.js":
+/*!***************************!*\
+  !*** ./app/store/wine.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getAllWines = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case GET_ALL_WINES:
+      return _extends({}, state, { wines: action.payload });
+    default:
+      return state;
+  }
+};
+
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//action type
+var GET_ALL_WINES = "GET_ALL_WINES";
+
+//action creator
+var getWines = function getWines(wines) {
+  return { type: GET_ALL_WINES, payload: wines };
+};
+
+//thunk creator
+var getAllWines = exports.getAllWines = function getAllWines() {
+  return function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
+      var wineData, allWines;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return _axios2.default.get("/api");
+
+            case 3:
+              wineData = _context.sent;
+              allWines = getWines(wineData);
+
+              dispatch(allWines);
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+
+              console.log("error in thunk creator ", _context.t0);
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, undefined, [[0, 8]]);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+};
+
+//reducer
+var defaultState = {};
 
 /***/ }),
 
@@ -38131,7 +38241,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

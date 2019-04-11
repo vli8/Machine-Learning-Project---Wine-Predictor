@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { getAllWines } from "../store/wine";
 
-export default class Homepage extends React.Component {
+class Homepage extends React.Component {
   render() {
     return (
       <div>
@@ -9,3 +11,19 @@ export default class Homepage extends React.Component {
     );
   }
 }
+
+const mapstate = state => {
+  return {
+    wines: state.wines
+  };
+};
+const mapDispatch = dispatch => {
+  return {
+    getWines: dispatch(getAllWines())
+  };
+};
+
+export default connect(
+  mapstate,
+  mapDispatch
+)(Homepage);
