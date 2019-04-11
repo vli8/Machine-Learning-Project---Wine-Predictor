@@ -134,10 +134,18 @@ var Homepage = function (_React$Component) {
   function Homepage() {
     _classCallCheck(this, Homepage);
 
-    return _possibleConstructorReturn(this, (Homepage.__proto__ || Object.getPrototypeOf(Homepage)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Homepage.__proto__ || Object.getPrototypeOf(Homepage)).call(this));
+
+    _this.state = {};
+    return _this;
   }
 
   _createClass(Homepage, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // this.props.getWines();
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
@@ -184,7 +192,9 @@ var mapstate = function mapstate(state) {
 };
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    getWines: dispatch((0, _wine.getAllWines)())
+    getWines: function getWines() {
+      return dispatch((0, _wine.getAllWines)());
+    }
   };
 };
 
@@ -216,6 +226,14 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _wine = __webpack_require__(/*! ../store/wine */ "./app/store/wine.js");
 
+var _CardGroup = __webpack_require__(/*! react-bootstrap/CardGroup */ "./node_modules/react-bootstrap/CardGroup.js");
+
+var _CardGroup2 = _interopRequireDefault(_CardGroup);
+
+var _Card = __webpack_require__(/*! react-bootstrap/Card */ "./node_modules/react-bootstrap/Card.js");
+
+var _Card2 = _interopRequireDefault(_Card);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -230,19 +248,64 @@ var AllWines = function (_React$Component) {
   function AllWines() {
     _classCallCheck(this, AllWines);
 
-    return _possibleConstructorReturn(this, (AllWines.__proto__ || Object.getPrototypeOf(AllWines)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (AllWines.__proto__ || Object.getPrototypeOf(AllWines)).call(this));
+
+    _this.state = {};
+    return _this;
   }
 
   _createClass(AllWines, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.getWines();
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
         "div",
         null,
         _react2.default.createElement(
-          "h1",
+          _CardGroup2.default,
           null,
-          "All Wines!"
+          this.props.wines.payload ? _react2.default.createElement(
+            "div",
+            null,
+            this.props.wines.payload.data.map(function (wine) {
+              return _react2.default.createElement(
+                _Card2.default,
+                { key: wine.id },
+                _react2.default.createElement(_Card2.default.Img, {
+                  variant: "top",
+                  src: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80"
+                }),
+                _react2.default.createElement(
+                  _Card2.default.Body,
+                  null,
+                  _react2.default.createElement(
+                    _Card2.default.Title,
+                    null,
+                    wine.title
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Text,
+                    null,
+                    wine.description
+                  )
+                ),
+                _react2.default.createElement(
+                  _Card2.default.Footer,
+                  null,
+                  _react2.default.createElement(
+                    "small",
+                    { className: "text-muted" },
+                    "Points: ",
+                    wine.points
+                  )
+                )
+              );
+            })
+          ) : _react2.default.createElement("div", null)
         )
       );
     }
@@ -258,7 +321,9 @@ var mapState = function mapState(state) {
 };
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    getWines: dispatch((0, _wine.getAllWines)())
+    getWines: function getWines() {
+      return dispatch((0, _wine.getAllWines)());
+    }
   };
 };
 
@@ -398,7 +463,7 @@ exports.default = function () {
 
   switch (action.type) {
     case GET_ALL_WINES:
-      return _extends({}, state, { wines: action.payload });
+      return _extends({}, state, { payload: action.payload });
     default:
       return state;
   }
@@ -13737,6 +13802,30 @@ module.exports = exports['default'];
 
 /***/ }),
 
+/***/ "./node_modules/dom-helpers/util/camelize.js":
+/*!***************************************************!*\
+  !*** ./node_modules/dom-helpers/util/camelize.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = camelize;
+var rHyphen = /-(.)/g;
+
+function camelize(string) {
+  return string.replace(rHyphen, function (_, chr) {
+    return chr.toUpperCase();
+  });
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./node_modules/fbjs/lib/emptyFunction.js":
 /*!************************************************!*\
   !*** ./node_modules/fbjs/lib/emptyFunction.js ***!
@@ -16150,6 +16239,198 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./node_modules/react-bootstrap/Card.js":
+/*!**********************************************!*\
+  !*** ./node_modules/react-bootstrap/Card.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var _createWithBsPrefix = _interopRequireDefault(__webpack_require__(/*! ./utils/createWithBsPrefix */ "./node_modules/react-bootstrap/utils/createWithBsPrefix.js"));
+
+var _divWithClassName = _interopRequireDefault(__webpack_require__(/*! ./utils/divWithClassName */ "./node_modules/react-bootstrap/utils/divWithClassName.js"));
+
+var _CardContext = _interopRequireDefault(__webpack_require__(/*! ./CardContext */ "./node_modules/react-bootstrap/CardContext.js"));
+
+var _CardImg = _interopRequireDefault(__webpack_require__(/*! ./CardImg */ "./node_modules/react-bootstrap/CardImg.js"));
+
+var DivStyledAsH5 = (0, _divWithClassName.default)('h5');
+var DivStyledAsH6 = (0, _divWithClassName.default)('h6');
+var CardBody = (0, _createWithBsPrefix.default)('card-body');
+var defaultProps = {
+  as: 'div',
+  body: false
+};
+
+var Card = _react.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      className = _ref.className,
+      bg = _ref.bg,
+      text = _ref.text,
+      border = _ref.border,
+      body = _ref.body,
+      children = _ref.children,
+      Component = _ref.as,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "bg", "text", "border", "body", "children", "as"]);
+  var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'card');
+  var cardContext = (0, _react.useMemo)(function () {
+    return {
+      cardHeaderBsPrefix: prefix + "-header"
+    };
+  }, [prefix]);
+  return _react.default.createElement(_CardContext.default.Provider, {
+    value: cardContext
+  }, _react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref
+  }, props, {
+    className: (0, _classnames.default)(className, prefix, bg && "bg-" + bg, text && "text-" + text, border && "border-" + border)
+  }), body ? _react.default.createElement(CardBody, null, children) : children));
+});
+
+Card.displayName = 'Card';
+Card.defaultProps = defaultProps;
+Card.Img = _CardImg.default;
+Card.Title = (0, _createWithBsPrefix.default)('card-title', {
+  Component: DivStyledAsH5
+});
+Card.Subtitle = (0, _createWithBsPrefix.default)('card-subtitle', {
+  Component: DivStyledAsH6
+});
+Card.Body = CardBody;
+Card.Link = (0, _createWithBsPrefix.default)('card-link', {
+  Component: 'a'
+});
+Card.Text = (0, _createWithBsPrefix.default)('card-text', {
+  Component: 'p'
+});
+Card.Header = (0, _createWithBsPrefix.default)('card-header');
+Card.Footer = (0, _createWithBsPrefix.default)('card-footer');
+Card.ImgOverlay = (0, _createWithBsPrefix.default)('card-img-overlay');
+var _default = Card;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/CardContext.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/react-bootstrap/CardContext.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _default = _react.default.createContext(null);
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/CardGroup.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-bootstrap/CardGroup.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _createWithBsPrefix = _interopRequireDefault(__webpack_require__(/*! ./utils/createWithBsPrefix */ "./node_modules/react-bootstrap/utils/createWithBsPrefix.js"));
+
+var _default = (0, _createWithBsPrefix.default)('card-group');
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/CardImg.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-bootstrap/CardImg.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var defaultProps = {
+  as: 'img',
+  variant: null
+};
+
+var CardImg = _react.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      className = _ref.className,
+      variant = _ref.variant,
+      Component = _ref.as,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "className", "variant", "as"]);
+  var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'card-img');
+  return _react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref,
+    className: (0, _classnames.default)(variant ? prefix + "-" + variant : prefix, className)
+  }, props));
+});
+
+CardImg.displayName = 'CardImg';
+CardImg.defaultProps = defaultProps;
+var _default = CardImg;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./node_modules/react-bootstrap/Jumbotron.js":
 /*!***************************************************!*\
   !*** ./node_modules/react-bootstrap/Jumbotron.js ***!
@@ -16487,6 +16768,103 @@ function createChainedFunction() {
 }
 
 var _default = createChainedFunction;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/utils/createWithBsPrefix.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/react-bootstrap/utils/createWithBsPrefix.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = createWithBsPrefix;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _camelize = _interopRequireDefault(__webpack_require__(/*! dom-helpers/util/camelize */ "./node_modules/dom-helpers/util/camelize.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ../ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var pascalCase = function pascalCase(str) {
+  return str[0].toUpperCase() + (0, _camelize.default)(str).slice(1);
+};
+
+function createWithBsPrefix(prefix, _temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      _ref$displayName = _ref.displayName,
+      displayName = _ref$displayName === void 0 ? pascalCase(prefix) : _ref$displayName,
+      _ref$Component = _ref.Component,
+      Component = _ref$Component === void 0 ? 'div' : _ref$Component,
+      defaultProps = _ref.defaultProps;
+
+  var BsComponent = _react.default.forwardRef( // eslint-disable-next-line react/prop-types
+  function (_ref2, ref) {
+    var className = _ref2.className,
+        bsPrefix = _ref2.bsPrefix,
+        _ref2$as = _ref2.as,
+        Tag = _ref2$as === void 0 ? Component : _ref2$as,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["className", "bsPrefix", "as"]);
+    var resolvedPrefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, prefix);
+    return _react.default.createElement(Tag, (0, _extends2.default)({
+      ref: ref,
+      className: (0, _classnames.default)(className, resolvedPrefix)
+    }, props));
+  });
+
+  BsComponent.defaultProps = defaultProps;
+  BsComponent.displayName = displayName;
+  return BsComponent;
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/utils/divWithClassName.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/react-bootstrap/utils/divWithClassName.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _default = function _default(className) {
+  return _react.default.forwardRef(function (p, ref) {
+    return _react.default.createElement("div", (0, _extends2.default)({}, p, {
+      ref: ref,
+      className: (0, _classnames.default)(p.className, className)
+    }));
+  });
+};
+
 exports.default = _default;
 module.exports = exports["default"];
 

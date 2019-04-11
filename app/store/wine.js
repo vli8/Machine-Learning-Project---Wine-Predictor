@@ -22,7 +22,7 @@ const defaultState = {};
 export default function(state = defaultState, action) {
   switch (action.type) {
     case GET_ALL_WINES:
-      return { ...state, wines: action.payload };
+      return { ...state, payload: action.payload };
     default:
       return state;
   }

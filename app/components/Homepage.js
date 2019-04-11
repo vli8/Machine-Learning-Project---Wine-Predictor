@@ -6,6 +6,13 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 class Homepage extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+  componentDidMount() {
+    // this.props.getWines();
+  }
   render() {
     return (
       <div>
@@ -33,7 +40,7 @@ const mapstate = state => {
 };
 const mapDispatch = dispatch => {
   return {
-    getWines: dispatch(getAllWines())
+    getWines: () => dispatch(getAllWines())
   };
 };
 
