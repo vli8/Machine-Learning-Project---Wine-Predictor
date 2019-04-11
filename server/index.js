@@ -14,6 +14,11 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/api", require("./api"));
 
+app.use((err, req, res, next) => {
+  console.log("ERROR: ", err);
+  res.status(404);
+});
+
 const startServerConnectDB = async () => {
   await db.sync({ force: true });
   console.log("db synced");
@@ -25,3 +30,5 @@ const startServerConnectDB = async () => {
 };
 
 startServerConnectDB();
+
+module.exports = app;
