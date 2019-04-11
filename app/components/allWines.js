@@ -16,31 +16,30 @@ class AllWines extends React.Component {
   render() {
     return (
       <div>
-        <CardGroup>
-          {this.props.wines.payload ? (
-            <div>
-              {this.props.wines.payload.data.map(wine => {
-                return (
-                  <Card key={wine.id}>
-                    <Card.Img
-                      variant="top"
-                      src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80"
-                    />
+        {this.props.wines.payload ? (
+          <div>
+            {this.props.wines.payload.data.map(wine => {
+              return (
+                <div key={wine.id}>
+                  <Card style={{ width: "26rem" }}>
                     <Card.Body>
-                      <Card.Title>{wine.title}</Card.Title>
+                      <Card.Title>
+                        {wine.id}: {wine.title}
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">Points: {wine.points}</Card.Subtitle>
                       <Card.Text>{wine.description}</Card.Text>
+                      <Card.Subtitle className="mb-2 text-muted">Author: {wine.taster_name}</Card.Subtitle>
+                      <Card.Link href="#">See more</Card.Link>
                     </Card.Body>
-                    <Card.Footer>
-                      <small className="text-muted">Points: {wine.points}</small>
-                    </Card.Footer>
                   </Card>
-                );
-              })}
-            </div>
-          ) : (
-            <div />
-          )}
-        </CardGroup>
+                  <br />
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }

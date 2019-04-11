@@ -265,48 +265,54 @@ var AllWines = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(
-          _CardGroup2.default,
+        this.props.wines.payload ? _react2.default.createElement(
+          "div",
           null,
-          this.props.wines.payload ? _react2.default.createElement(
-            "div",
-            null,
-            this.props.wines.payload.data.map(function (wine) {
-              return _react2.default.createElement(
+          this.props.wines.payload.data.map(function (wine) {
+            return _react2.default.createElement(
+              "div",
+              { key: wine.id },
+              _react2.default.createElement(
                 _Card2.default,
-                { key: wine.id },
-                _react2.default.createElement(_Card2.default.Img, {
-                  variant: "top",
-                  src: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80"
-                }),
+                { style: { width: "26rem" } },
                 _react2.default.createElement(
                   _Card2.default.Body,
                   null,
                   _react2.default.createElement(
                     _Card2.default.Title,
                     null,
+                    wine.id,
+                    ": ",
                     wine.title
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Subtitle,
+                    { className: "mb-2 text-muted" },
+                    "Points: ",
+                    wine.points
                   ),
                   _react2.default.createElement(
                     _Card2.default.Text,
                     null,
                     wine.description
-                  )
-                ),
-                _react2.default.createElement(
-                  _Card2.default.Footer,
-                  null,
+                  ),
                   _react2.default.createElement(
-                    "small",
-                    { className: "text-muted" },
-                    "Points: ",
-                    wine.points
+                    _Card2.default.Subtitle,
+                    { className: "mb-2 text-muted" },
+                    "Author: ",
+                    wine.taster_name
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Link,
+                    { href: "#" },
+                    "See more"
                   )
                 )
-              );
-            })
-          ) : _react2.default.createElement("div", null)
-        )
+              ),
+              _react2.default.createElement("br", null)
+            );
+          })
+        ) : _react2.default.createElement("div", null)
       );
     }
   }]);
