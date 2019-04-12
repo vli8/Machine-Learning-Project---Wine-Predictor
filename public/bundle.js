@@ -850,7 +850,7 @@ exports.default = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getSelectedWine = exports.getAllWines = undefined;
+exports.postWine = exports.getSelectedWine = exports.getAllWines = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -863,6 +863,8 @@ exports.default = function () {
       return _extends({}, state, { allWines: action.payload });
     case GET_SINGLE_WINE:
       return _extends({}, state, { allWines: state.allWines, selectedWine: action.payload });
+    case ADD_WINE:
+      return _extends({}, state, { allWines: [].concat(_toConsumableArray(state.allWines), [action.payload]) });
     default:
       return state;
   }
@@ -874,12 +876,15 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 /*---------------------------------------------------------------------------------------------*/
 // STEP1: action type
 var GET_ALL_WINES = "GET_ALL_WINES";
 var GET_SINGLE_WINE = "GET_SINGLE_WINE";
+var ADD_WINE = "ADD_WINE";
 
 /*---------------------------------------------------------------------------------------------*/
 
@@ -889,6 +894,9 @@ var getWines = function getWines(wines) {
 };
 var getSingleWine = function getSingleWine(singleWine) {
   return { type: GET_SINGLE_WINE, payload: singleWine };
+};
+var addWine = function addWine(wineObj) {
+  return { type: ADD_WINE, payload: wineObj };
 };
 
 /*---------------------------------------------------------------------------------------------*/
@@ -969,6 +977,46 @@ var getSelectedWine = exports.getSelectedWine = function getSelectedWine(wineId)
 
     return function (_x2) {
       return _ref2.apply(this, arguments);
+    };
+  }();
+};
+
+var postWine = exports.postWine = function postWine(wineObj) {
+  return function () {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(dispatch) {
+      var newWine, actionWine;
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return _axios2.default.post("/api/addWine", wineObj);
+
+            case 3:
+              newWine = _context3.sent;
+              actionWine = addWine(newWine);
+
+              dispatch(actionWine);
+              _context3.next = 11;
+              break;
+
+            case 8:
+              _context3.prev = 8;
+              _context3.t0 = _context3["catch"](0);
+
+              console.log("ERROR in thunk creator add wine", _context3.t0);
+
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, undefined, [[0, 8]]);
+    }));
+
+    return function (_x3) {
+      return _ref3.apply(this, arguments);
     };
   }();
 };
@@ -39936,7 +39984,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

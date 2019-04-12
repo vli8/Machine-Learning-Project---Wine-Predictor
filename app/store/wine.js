@@ -4,12 +4,14 @@ import axios from "axios";
 // STEP1: action type
 const GET_ALL_WINES = "GET_ALL_WINES";
 const GET_SINGLE_WINE = "GET_SINGLE_WINE";
+const ADD_WINE = "ADD_WINE";
 
 /*---------------------------------------------------------------------------------------------*/
 
 //STEP2: action creator
 const getWines = wines => ({ type: GET_ALL_WINES, payload: wines });
 const getSingleWine = singleWine => ({ type: GET_SINGLE_WINE, payload: singleWine });
+const addWine = wineObj => ({ type: ADD_WINE, payload: wineObj });
 
 /*---------------------------------------------------------------------------------------------*/
 
@@ -33,6 +35,16 @@ export const getSelectedWine = wineId => async dispatch => {
   }
 };
 
+export const postWine = wineObj => async dispatch => {
+  try {
+    const newWine = await axios.post("/api/addWine", wineObj);
+    const actionWine = addWine(newWine);
+    dispatch(actionWine);
+  } catch (error) {
+    console.log("ERROR in thunk creator add wine", error);
+  }
+};
+
 /*---------------------------------------------------------------------------------------------*/
 
 //FINAL STEP: reducer
@@ -43,6 +55,8 @@ export default function(state = defaultState, action) {
       return { ...state, allWines: action.payload };
     case GET_SINGLE_WINE:
       return { ...state, allWines: state.allWines, selectedWine: action.payload };
+    case ADD_WINE:
+      return { ...state, allWines: [...state.allWines, action.payload] };
     default:
       return state;
   }

@@ -21,5 +21,13 @@ router.get("/:id", async (req, res, next) => {
     console.log("error in :id route", error);
   }
 });
+router.post("/addWine", (req, res, next) => {
+  try {
+    console.log(req.body);
+    res.send(req.body);
+  } catch (error) {
+    console.log(ERROR);
+  }
+});
 
 module.exports = router;
