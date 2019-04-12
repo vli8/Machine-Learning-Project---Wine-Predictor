@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { addWine } from "../store/wine";
 
 class PredictWine extends React.Component {
   constructor() {
@@ -27,8 +28,10 @@ class PredictWine extends React.Component {
     }
     console.log("state: ", this.state);
   }
-  handleSubmit() {
+  handleSubmit(event) {
+    event.preventDefault();
     console.log("Submitted!");
+    this.props.addWine(this.state);
     this.props.history.push("/winePredictor");
   }
   render() {
@@ -64,4 +67,18 @@ class PredictWine extends React.Component {
   }
 }
 
-export default connect()(PredictWine);
+const mapState = state => {
+  return {
+    wine: state.wine
+  };
+};
+const mapDisaptch = dispatch => {
+  return {
+    addWine: newWine => dispatch(addWine(newWine))
+  };
+};
+
+export default connect(
+  mapState,
+  mapDisaptch
+)(PredictWine);

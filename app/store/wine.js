@@ -11,7 +11,7 @@ const ADD_WINE = "ADD_WINE";
 //STEP2: action creator
 const getWines = wines => ({ type: GET_ALL_WINES, payload: wines });
 const getSingleWine = singleWine => ({ type: GET_SINGLE_WINE, payload: singleWine });
-const addWine = wineObj => ({ type: ADD_WINE, payload: wineObj });
+const postWine = wineObj => ({ type: ADD_WINE, payload: wineObj });
 
 /*---------------------------------------------------------------------------------------------*/
 
@@ -35,10 +35,10 @@ export const getSelectedWine = wineId => async dispatch => {
   }
 };
 
-export const postWine = wineObj => async dispatch => {
+export const addWine = wineObj => async dispatch => {
   try {
     const newWine = await axios.post("/api/addWine", wineObj);
-    const actionWine = addWine(newWine);
+    const actionWine = postWine(newWine);
     dispatch(actionWine);
   } catch (error) {
     console.log("ERROR in thunk creator add wine", error);
@@ -56,7 +56,7 @@ export default function(state = defaultState, action) {
     case GET_SINGLE_WINE:
       return { ...state, allWines: state.allWines, selectedWine: action.payload };
     case ADD_WINE:
-      return { ...state, allWines: [...state.allWines, action.payload] };
+      return { ...state, newWine: action.payload };
     default:
       return state;
   }

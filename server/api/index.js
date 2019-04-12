@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Wines } = require("../db/index");
+const { Wines, NewWines } = require("../db/index");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -21,12 +21,14 @@ router.get("/:id", async (req, res, next) => {
     console.log("error in :id route", error);
   }
 });
-router.post("/addWine", (req, res, next) => {
+router.post("/addWine", async (req, res, next) => {
   try {
     console.log(req.body);
-    res.send(req.body);
+    const newWine = await NewWines.create(req.body);
+    console.log("Im here");
+    res.send(newWine);
   } catch (error) {
-    console.log(ERROR);
+    console.log("error in post", error);
   }
 });
 

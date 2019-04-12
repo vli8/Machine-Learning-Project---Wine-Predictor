@@ -47,4 +47,16 @@ const Wines = db.define("wine", {
   }
 });
 
-module.exports = { Wines, db };
+const NewWines = db.define("newWine", {
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
+  userName: {
+    type: Sequelize.STRING
+  }
+});
+
+NewWines.belongsTo(Wines);
+
+module.exports = { Wines, NewWines, db };
