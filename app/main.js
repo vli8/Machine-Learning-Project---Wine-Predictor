@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import AllWines from "./components/AllWines";
 import SingleWine from "./components/SingleWine";
+import PredictWine from "./components/PredictWine";
 render(
   <Provider store={store}>
     <HashRouter>
@@ -13,6 +14,7 @@ render(
         <Route exact path="/" component={HomePage} />
         <Route exact path="/wines" component={AllWines} />
         <Route exact path="/wines/:id" component={SingleWine} />
+        <Route exact path="/predict" component={PredictWine} />
       </Switch>
     </HashRouter>
   </Provider>,

@@ -319,6 +319,15 @@ var Homepage = function (_React$Component) {
                 "See all wines"
               )
             )
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: "/predict" },
+            _react2.default.createElement(
+              _Button2.default,
+              { variant: "secondary" },
+              "Describe a wine"
+            )
           )
         )
       );
@@ -342,6 +351,186 @@ var mapDispatch = function mapDispatch(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapstate, mapDispatch)(Homepage);
+
+/***/ }),
+
+/***/ "./app/components/PredictWine.js":
+/*!***************************************!*\
+  !*** ./app/components/PredictWine.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _Jumbotron = __webpack_require__(/*! react-bootstrap/Jumbotron */ "./node_modules/react-bootstrap/Jumbotron.js");
+
+var _Jumbotron2 = _interopRequireDefault(_Jumbotron);
+
+var _Button = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var PredictWine = function (_React$Component) {
+  _inherits(PredictWine, _React$Component);
+
+  function PredictWine() {
+    _classCallCheck(this, PredictWine);
+
+    var _this = _possibleConstructorReturn(this, (PredictWine.__proto__ || Object.getPrototypeOf(PredictWine)).call(this));
+
+    _this.state = {
+      description: "",
+      userName: ""
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(PredictWine, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {}
+  }, {
+    key: "handleChange",
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(event) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!(event.target.name === "description")) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 3;
+                return this.setState({
+                  description: event.target.value
+                });
+
+              case 3:
+                _context.next = 8;
+                break;
+
+              case 5:
+                if (!(event.target.name === "userName")) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 8;
+                return this.setState({
+                  userName: event.target.value
+                });
+
+              case 8:
+                console.log("state: ", this.state);
+
+              case 9:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleChange(_x) {
+        return _ref.apply(this, arguments);
+      }
+
+      return handleChange;
+    }()
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit() {
+      console.log("Submitted!");
+      this.props.history.push("/winePredictor");
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(
+          _Jumbotron2.default,
+          null,
+          _react2.default.createElement(
+            "h1",
+            null,
+            "We will predict the wine for you!"
+          ),
+          _react2.default.createElement(
+            "p",
+            null,
+            "Describe what you taste and we will do the rest! Shazam for wines"
+          ),
+          _react2.default.createElement(
+            "p",
+            null,
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: "/wines" },
+              _react2.default.createElement(
+                _Button2.default,
+                { variant: "primary" },
+                "See all wines"
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          "form",
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement("textarea", { name: "description", onChange: this.handleChange, placeholder: "Description", rows: "4", cols: "50" }),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement("input", { name: "userName", onChange: this.handleChange, placeholder: "user name" }),
+          _react2.default.createElement("br", null),
+          _react2.default.createElement("br", null),
+          this.state.description ? _react2.default.createElement(
+            "button",
+            { disabled: false, type: "submit" },
+            "Show me the wine!"
+          ) : _react2.default.createElement(
+            "button",
+            { disabled: true, type: "submit" },
+            "Show me the wine!"
+          )
+        )
+      );
+    }
+  }]);
+
+  return PredictWine;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)()(PredictWine);
 
 /***/ }),
 
@@ -565,6 +754,10 @@ var _SingleWine = __webpack_require__(/*! ./components/SingleWine */ "./app/comp
 
 var _SingleWine2 = _interopRequireDefault(_SingleWine);
 
+var _PredictWine = __webpack_require__(/*! ./components/PredictWine */ "./app/components/PredictWine.js");
+
+var _PredictWine2 = _interopRequireDefault(_PredictWine);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _reactDom.render)(_react2.default.createElement(
@@ -578,7 +771,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
       null,
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Homepage2.default }),
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/wines", component: _AllWines2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/wines/:id", component: _SingleWine2.default })
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/wines/:id", component: _SingleWine2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/predict", component: _PredictWine2.default })
     )
   )
 ), document.getElementById("main"));

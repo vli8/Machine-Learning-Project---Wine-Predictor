@@ -27,6 +27,9 @@ class Homepage extends React.Component {
               <Button variant="primary">See all wines</Button>
             </Link>
           </p>
+          <Link to="/predict">
+            <Button variant="secondary">Describe a wine</Button>
+          </Link>
         </Jumbotron>
       </div>
     );
