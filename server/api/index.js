@@ -9,5 +9,17 @@ router.get("/", async (req, res, next) => {
     console.log("ERROR", error);
   }
 });
+router.get("/:id", async (req, res, next) => {
+  try {
+    const singleWine = await Wines.findAll({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.json(singleWine);
+  } catch (error) {
+    console.log("error in :id route", error);
+  }
+});
 
 module.exports = router;

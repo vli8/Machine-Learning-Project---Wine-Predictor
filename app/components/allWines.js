@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getAllWines } from "../store/wine";
-import CardGroup from "react-bootstrap/CardGroup";
 import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
+
 class AllWines extends React.Component {
   constructor() {
     super();
@@ -16,9 +18,9 @@ class AllWines extends React.Component {
   render() {
     return (
       <div>
-        {this.props.wines.payload ? (
+        {this.props.wines.allWines ? (
           <div>
-            {this.props.wines.payload.data.map(wine => {
+            {this.props.wines.allWines.data.map(wine => {
               return (
                 <div key={wine.id}>
                   <Card style={{ width: "26rem" }}>
@@ -29,7 +31,10 @@ class AllWines extends React.Component {
                       <Card.Subtitle className="mb-2 text-muted">Points: {wine.points}</Card.Subtitle>
                       <Card.Text>{wine.description}</Card.Text>
                       <Card.Subtitle className="mb-2 text-muted">Author: {wine.taster_name}</Card.Subtitle>
-                      <Card.Link href="#">See more</Card.Link>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        Price: ${wine.price !== null ? wine.price : "Not Provided"}
+                      </Card.Subtitle>
+                      <Link to={`/wines/${wine.id}`}>See more...</Link>
                     </Card.Body>
                   </Card>
                   <br />
@@ -38,7 +43,7 @@ class AllWines extends React.Component {
             })}
           </div>
         ) : (
-          <div />
+          <Spinner animation="border" variant="primary" />
         )}
       </div>
     );

@@ -86,6 +86,149 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./app/components/AllWines.js":
+/*!************************************!*\
+  !*** ./app/components/AllWines.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _wine = __webpack_require__(/*! ../store/wine */ "./app/store/wine.js");
+
+var _Card = __webpack_require__(/*! react-bootstrap/Card */ "./node_modules/react-bootstrap/Card.js");
+
+var _Card2 = _interopRequireDefault(_Card);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
+var _Spinner = __webpack_require__(/*! react-bootstrap/Spinner */ "./node_modules/react-bootstrap/Spinner.js");
+
+var _Spinner2 = _interopRequireDefault(_Spinner);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AllWines = function (_React$Component) {
+  _inherits(AllWines, _React$Component);
+
+  function AllWines() {
+    _classCallCheck(this, AllWines);
+
+    var _this = _possibleConstructorReturn(this, (AllWines.__proto__ || Object.getPrototypeOf(AllWines)).call(this));
+
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(AllWines, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.getWines();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        null,
+        this.props.wines.allWines ? _react2.default.createElement(
+          "div",
+          null,
+          this.props.wines.allWines.data.map(function (wine) {
+            return _react2.default.createElement(
+              "div",
+              { key: wine.id },
+              _react2.default.createElement(
+                _Card2.default,
+                { style: { width: "26rem" } },
+                _react2.default.createElement(
+                  _Card2.default.Body,
+                  null,
+                  _react2.default.createElement(
+                    _Card2.default.Title,
+                    null,
+                    wine.id,
+                    ": ",
+                    wine.title
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Subtitle,
+                    { className: "mb-2 text-muted" },
+                    "Points: ",
+                    wine.points
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Text,
+                    null,
+                    wine.description
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Subtitle,
+                    { className: "mb-2 text-muted" },
+                    "Author: ",
+                    wine.taster_name
+                  ),
+                  _react2.default.createElement(
+                    _Card2.default.Subtitle,
+                    { className: "mb-2 text-muted" },
+                    "Price: $",
+                    wine.price !== null ? wine.price : "Not Provided"
+                  ),
+                  _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: "/wines/" + wine.id },
+                    "See more..."
+                  )
+                )
+              ),
+              _react2.default.createElement("br", null)
+            );
+          })
+        ) : _react2.default.createElement(_Spinner2.default, { animation: "border", variant: "primary" })
+      );
+    }
+  }]);
+
+  return AllWines;
+}(_react2.default.Component);
+
+var mapState = function mapState(state) {
+  return {
+    wines: state.wines
+  };
+};
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    getWines: function getWines() {
+      return dispatch((0, _wine.getAllWines)());
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(AllWines);
+
+/***/ }),
+
 /***/ "./app/components/Homepage.js":
 /*!************************************!*\
   !*** ./app/components/Homepage.js ***!
@@ -202,10 +345,10 @@ exports.default = (0, _reactRedux.connect)(mapstate, mapDispatch)(Homepage);
 
 /***/ }),
 
-/***/ "./app/components/allWines.js":
-/*!************************************!*\
-  !*** ./app/components/allWines.js ***!
-  \************************************/
+/***/ "./app/components/SingleWine.js":
+/*!**************************************!*\
+  !*** ./app/components/SingleWine.js ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -226,13 +369,27 @@ var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-r
 
 var _wine = __webpack_require__(/*! ../store/wine */ "./app/store/wine.js");
 
-var _CardGroup = __webpack_require__(/*! react-bootstrap/CardGroup */ "./node_modules/react-bootstrap/CardGroup.js");
+var _Jumbotron = __webpack_require__(/*! react-bootstrap/Jumbotron */ "./node_modules/react-bootstrap/Jumbotron.js");
 
-var _CardGroup2 = _interopRequireDefault(_CardGroup);
+var _Jumbotron2 = _interopRequireDefault(_Jumbotron);
+
+var _Container = __webpack_require__(/*! react-bootstrap/Container */ "./node_modules/react-bootstrap/Container.js");
+
+var _Container2 = _interopRequireDefault(_Container);
+
+var _Spinner = __webpack_require__(/*! react-bootstrap/Spinner */ "./node_modules/react-bootstrap/Spinner.js");
+
+var _Spinner2 = _interopRequireDefault(_Spinner);
 
 var _Card = __webpack_require__(/*! react-bootstrap/Card */ "./node_modules/react-bootstrap/Card.js");
 
 var _Card2 = _interopRequireDefault(_Card);
+
+var _Button = __webpack_require__(/*! react-bootstrap/Button */ "./node_modules/react-bootstrap/Button.js");
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -242,22 +399,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AllWines = function (_React$Component) {
-  _inherits(AllWines, _React$Component);
+var SingleWine = function (_React$Component) {
+  _inherits(SingleWine, _React$Component);
 
-  function AllWines() {
-    _classCallCheck(this, AllWines);
+  function SingleWine() {
+    _classCallCheck(this, SingleWine);
 
-    var _this = _possibleConstructorReturn(this, (AllWines.__proto__ || Object.getPrototypeOf(AllWines)).call(this));
+    var _this = _possibleConstructorReturn(this, (SingleWine.__proto__ || Object.getPrototypeOf(SingleWine)).call(this));
 
     _this.state = {};
     return _this;
   }
 
-  _createClass(AllWines, [{
+  _createClass(SingleWine, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.props.getWines();
+      this.props.getSelectedWine(this.props.match.params.id);
     }
   }, {
     key: "render",
@@ -265,59 +422,93 @@ var AllWines = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         null,
-        this.props.wines.payload ? _react2.default.createElement(
+        this.props.wines.selectedWine ? _react2.default.createElement(
           "div",
           null,
-          this.props.wines.payload.data.map(function (wine) {
-            return _react2.default.createElement(
-              "div",
-              { key: wine.id },
+          _react2.default.createElement(
+            _Jumbotron2.default,
+            { fluid: true },
+            _react2.default.createElement(
+              _Container2.default,
+              null,
               _react2.default.createElement(
-                _Card2.default,
-                { style: { width: "26rem" } },
-                _react2.default.createElement(
-                  _Card2.default.Body,
-                  null,
-                  _react2.default.createElement(
-                    _Card2.default.Title,
-                    null,
-                    wine.id,
-                    ": ",
-                    wine.title
-                  ),
-                  _react2.default.createElement(
-                    _Card2.default.Subtitle,
-                    { className: "mb-2 text-muted" },
-                    "Points: ",
-                    wine.points
-                  ),
-                  _react2.default.createElement(
-                    _Card2.default.Text,
-                    null,
-                    wine.description
-                  ),
-                  _react2.default.createElement(
-                    _Card2.default.Subtitle,
-                    { className: "mb-2 text-muted" },
-                    "Author: ",
-                    wine.taster_name
-                  ),
-                  _react2.default.createElement(
-                    _Card2.default.Link,
-                    { href: "#" },
-                    "See more"
-                  )
-                )
+                "h1",
+                null,
+                "Title: ",
+                this.props.wines.selectedWine.data[0].title
               ),
-              _react2.default.createElement("br", null)
-            );
-          })
-        ) : _react2.default.createElement("div", null)
+              _react2.default.createElement(
+                _Card2.default.Text,
+                null,
+                " Description:"
+              ),
+              _react2.default.createElement(
+                _Card2.default.Text,
+                null,
+                this.props.wines.selectedWine.data[0].description
+              ),
+              _react2.default.createElement(
+                _Card2.default.Subtitle,
+                { className: "mb-2 text-muted" },
+                "Points: ",
+                this.props.wines.selectedWine.data[0].points,
+                " "
+              ),
+              _react2.default.createElement(
+                _Card2.default.Subtitle,
+                { className: "mb-2 text-muted" },
+                "Author: ",
+                this.props.wines.selectedWine.data[0].taster_name,
+                " (",
+                this.props.wines.selectedWine.data[0].taster_twitter_handle,
+                ")",
+                " "
+              ),
+              _react2.default.createElement(
+                _Card2.default.Subtitle,
+                { className: "mb-2 text-muted" },
+                "Country: ",
+                this.props.wines.selectedWine.data[0].country
+              ),
+              _react2.default.createElement(
+                _Card2.default.Subtitle,
+                { className: "mb-2 text-muted" },
+                "Variety: ",
+                this.props.wines.selectedWine.data[0].variety
+              ),
+              _react2.default.createElement(
+                _Card2.default.Subtitle,
+                { className: "mb-2 text-muted" },
+                "Price: $",
+                this.props.wines.selectedWine.data[0].price !== null ? this.props.wines.selectedWine.data[0].price : "Not provided"
+              )
+            ),
+            _react2.default.createElement("hr", null),
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: "/wines" },
+              _react2.default.createElement(
+                _Button2.default,
+                { variant: "primary" },
+                "See all wines"
+              )
+            ),
+            _react2.default.createElement(
+              _reactRouterDom.Link,
+              { to: "/" },
+              _react2.default.createElement(
+                _Button2.default,
+                { variant: "success" },
+                "Back Home"
+              )
+            )
+          )
+        ) : _react2.default.createElement(_Spinner2.default, { animation: "border", variant: "primary" })
       );
     }
   }]);
 
-  return AllWines;
+  return SingleWine;
 }(_react2.default.Component);
 
 var mapState = function mapState(state) {
@@ -325,15 +516,16 @@ var mapState = function mapState(state) {
     wines: state.wines
   };
 };
+
 var mapDispatch = function mapDispatch(dispatch) {
   return {
-    getWines: function getWines() {
-      return dispatch((0, _wine.getAllWines)());
+    getSelectedWine: function getSelectedWine(id) {
+      return dispatch((0, _wine.getSelectedWine)(id));
     }
   };
 };
 
-exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(AllWines);
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(SingleWine);
 
 /***/ }),
 
@@ -365,9 +557,13 @@ var _store = __webpack_require__(/*! ./store */ "./app/store/index.js");
 
 var _store2 = _interopRequireDefault(_store);
 
-var _allWines = __webpack_require__(/*! ./components/allWines */ "./app/components/allWines.js");
+var _AllWines = __webpack_require__(/*! ./components/AllWines */ "./app/components/AllWines.js");
 
-var _allWines2 = _interopRequireDefault(_allWines);
+var _AllWines2 = _interopRequireDefault(_AllWines);
+
+var _SingleWine = __webpack_require__(/*! ./components/SingleWine */ "./app/components/SingleWine.js");
+
+var _SingleWine2 = _interopRequireDefault(_SingleWine);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -381,7 +577,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
       _reactRouterDom.Switch,
       null,
       _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/", component: _Homepage2.default }),
-      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/wines", component: _allWines2.default })
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/wines", component: _AllWines2.default }),
+      _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: "/wines/:id", component: _SingleWine2.default })
     )
   )
 ), document.getElementById("main"));
@@ -459,7 +656,7 @@ exports.default = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getAllWines = undefined;
+exports.getSelectedWine = exports.getAllWines = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -469,7 +666,9 @@ exports.default = function () {
 
   switch (action.type) {
     case GET_ALL_WINES:
-      return _extends({}, state, { payload: action.payload });
+      return _extends({}, state, { allWines: action.payload });
+    case GET_SINGLE_WINE:
+      return _extends({}, state, { allWines: state.allWines, selectedWine: action.payload });
     default:
       return state;
   }
@@ -483,15 +682,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-//action type
+/*---------------------------------------------------------------------------------------------*/
+// STEP1: action type
 var GET_ALL_WINES = "GET_ALL_WINES";
+var GET_SINGLE_WINE = "GET_SINGLE_WINE";
 
-//action creator
+/*---------------------------------------------------------------------------------------------*/
+
+//STEP2: action creator
 var getWines = function getWines(wines) {
   return { type: GET_ALL_WINES, payload: wines };
 };
+var getSingleWine = function getSingleWine(singleWine) {
+  return { type: GET_SINGLE_WINE, payload: singleWine };
+};
 
-//thunk creator
+/*---------------------------------------------------------------------------------------------*/
+
+//STEP3: thunk creator
 var getAllWines = exports.getAllWines = function getAllWines() {
   return function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
@@ -531,8 +739,49 @@ var getAllWines = exports.getAllWines = function getAllWines() {
     };
   }();
 };
+var getSelectedWine = exports.getSelectedWine = function getSelectedWine(wineId) {
+  return function () {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(dispatch) {
+      var wine, selectedWine;
+      return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return _axios2.default.get("/api/" + wineId);
 
-//reducer
+            case 3:
+              wine = _context2.sent;
+              selectedWine = getSingleWine(wine);
+
+              dispatch(selectedWine);
+              _context2.next = 11;
+              break;
+
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+
+              console.log("ERROR in thunk creator single wine", _context2.t0);
+
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, undefined, [[0, 8]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+};
+
+/*---------------------------------------------------------------------------------------------*/
+
+//FINAL STEP: reducer
 var defaultState = {};
 
 /***/ }),
@@ -16362,30 +16611,6 @@ module.exports = exports["default"];
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/CardGroup.js":
-/*!***************************************************!*\
-  !*** ./node_modules/react-bootstrap/CardGroup.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _createWithBsPrefix = _interopRequireDefault(__webpack_require__(/*! ./utils/createWithBsPrefix */ "./node_modules/react-bootstrap/utils/createWithBsPrefix.js"));
-
-var _default = (0, _createWithBsPrefix.default)('card-group');
-
-exports.default = _default;
-module.exports = exports["default"];
-
-/***/ }),
-
 /***/ "./node_modules/react-bootstrap/CardImg.js":
 /*!*************************************************!*\
   !*** ./node_modules/react-bootstrap/CardImg.js ***!
@@ -16432,6 +16657,58 @@ var CardImg = _react.default.forwardRef(function (_ref, ref) {
 CardImg.displayName = 'CardImg';
 CardImg.defaultProps = defaultProps;
 var _default = CardImg;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/Container.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-bootstrap/Container.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var defaultProps = {
+  as: 'div',
+  fluid: false
+};
+
+var Container = _react.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      fluid = _ref.fluid,
+      Component = _ref.as,
+      className = _ref.className,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "fluid", "as", "className"]);
+  var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'container');
+  return _react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref
+  }, props, {
+    className: (0, _classnames.default)(className, fluid ? prefix + "-fluid" : prefix)
+  }));
+});
+
+Container.displayName = 'Container';
+Container.defaultProps = defaultProps;
+var _default = Container;
 exports.default = _default;
 module.exports = exports["default"];
 
@@ -16625,6 +16902,75 @@ function (_React$Component) {
 
 SafeAnchor.defaultProps = defaultProps;
 var _default = SafeAnchor;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/Spinner.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-bootstrap/Spinner.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var Spinner =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(Spinner, _React$Component);
+
+  function Spinner() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = Spinner.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        bsPrefix = _this$props.bsPrefix,
+        variant = _this$props.variant,
+        animation = _this$props.animation,
+        size = _this$props.size,
+        children = _this$props.children,
+        as = _this$props.as,
+        className = _this$props.className,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["bsPrefix", "variant", "animation", "size", "children", "as", "className"]);
+    var Component = as;
+    var bsSpinnerPrefix = bsPrefix + "-" + animation;
+    return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      className: (0, _classnames.default)(className, bsSpinnerPrefix, size && bsSpinnerPrefix + "-" + size, variant && "text-" + variant)
+    }), children);
+  };
+
+  return Spinner;
+}(_react.default.Component);
+
+Spinner.defaultProps = {
+  as: 'div'
+};
+
+var _default = (0, _ThemeProvider.createBootstrapComponent)(Spinner, 'spinner');
+
 exports.default = _default;
 module.exports = exports["default"];
 
