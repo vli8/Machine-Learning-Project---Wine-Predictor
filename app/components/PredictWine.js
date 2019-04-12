@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { addWine } from "../store/wine";
+import { addWine, getAllWines } from "../store/wine";
 import brain from "brain.js";
+import Spinner from "react-bootstrap/Spinner";
 
 class PredictWine extends React.Component {
   constructor() {
@@ -17,7 +18,9 @@ class PredictWine extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.getWines();
+  }
 
   async handleChange(event) {
     if (event.target.name === "description") {
@@ -33,53 +36,70 @@ class PredictWine extends React.Component {
   }
 
   trainData() {
-    const network = new brain.NeuralNetwork();
-    network.train([
-      { input: [0, 0, 0], output: [0] },
-      { input: [0, 0, 1], output: [0] },
-      { input: [1, 0, 0], output: [1] },
-      { input: [1, 1, 0], output: [1] }
-    ]);
-    const output = network.run([0, 1, 0]);
+    const network = new brain.recurrent.LSTM();
+
+    // const trainingData = this.props.wines.allWines.data.map(wine => ({
+    //   input: wine.description,
+    //   output: wine.country
+    // }));
+    // const cleanData = trainingData.filter(wine => wine.input !== null || wine.output !== null);
+
+    const data = [];
+    for (let i = 0; i < 7; i++) {
+      data.push({
+        input: this.props.wines.allWines.data[i].description,
+        output: this.props.wines.allWines.data[i].country
+      });
+    }
+    console.log("training data: ", data);
+    network.train(data, { iterations: 5 });
+    console.log("training data is over");
+    const output = network.run("The wine is sweet and red like its grapes from italy");
     console.log(output);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     console.log("Submitted!");
+    this.trainData();
     // this.props.addWine(this.state);
     // this.props.history.push("/winePredictor");
-    this.trainData();
   }
 
   render() {
     return (
       <div>
-        <Jumbotron>
-          <h1>We will predict the wine for you!</h1>
-          <p>Describe what you taste and we will do the rest! Shazam for wines</p>
-          <p>
-            <Link to="/wines">
-              <Button variant="primary">See all wines</Button>
-            </Link>
-          </p>
-        </Jumbotron>
-        <form onSubmit={this.handleSubmit}>
-          <textarea name="description" onChange={this.handleChange} placeholder="Description" rows="4" cols="50" />
-          <br />
-          <input name="userName" onChange={this.handleChange} placeholder="user name" />
-          <br />
-          <br />
-          {this.state.description ? (
-            <button disabled={false} type="submit">
-              Show me the wine!
-            </button>
-          ) : (
-            <button disabled={true} type="submit">
-              Show me the wine!
-            </button>
-          )}
-        </form>
+        {this.props.wines.allWines ? (
+          <div>
+            <Jumbotron>
+              <h1>We will predict the wine for you!</h1>
+              <p>Describe what you taste and we will do the rest! Shazam for wines</p>
+              <p>
+                <Link to="/wines">
+                  <Button variant="primary">See all wines</Button>
+                </Link>
+              </p>
+            </Jumbotron>
+            <form onSubmit={this.handleSubmit}>
+              <textarea name="description" onChange={this.handleChange} placeholder="Description" rows="4" cols="50" />
+              <br />
+              <input name="userName" onChange={this.handleChange} placeholder="user name" />
+              <br />
+              <br />
+              {this.state.description ? (
+                <button disabled={false} type="submit">
+                  Show me the wine!
+                </button>
+              ) : (
+                <button disabled={true} type="submit">
+                  Show me the wine!
+                </button>
+              )}
+            </form>
+          </div>
+        ) : (
+          <Spinner animation="border" variant="primary" />
+        )}
       </div>
     );
   }
@@ -87,12 +107,13 @@ class PredictWine extends React.Component {
 
 const mapState = state => {
   return {
-    wine: state.wine
+    wines: state.wines
   };
 };
 const mapDisaptch = dispatch => {
   return {
-    addWine: newWine => dispatch(addWine(newWine))
+    addWine: newWine => dispatch(addWine(newWine)),
+    getWines: () => dispatch(getAllWines())
   };
 };
 

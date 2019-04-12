@@ -392,6 +392,10 @@ var _brain = __webpack_require__(/*! brain.js */ "./node_modules/brain.js/index.
 
 var _brain2 = _interopRequireDefault(_brain);
 
+var _Spinner = __webpack_require__(/*! react-bootstrap/Spinner */ "./node_modules/react-bootstrap/Spinner.js");
+
+var _Spinner2 = _interopRequireDefault(_Spinner);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -421,7 +425,9 @@ var PredictWine = function (_React$Component) {
 
   _createClass(PredictWine, [{
     key: "componentDidMount",
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      this.props.getWines();
+    }
   }, {
     key: "handleChange",
     value: function () {
@@ -475,9 +481,25 @@ var PredictWine = function (_React$Component) {
   }, {
     key: "trainData",
     value: function trainData() {
-      var network = new _brain2.default.NeuralNetwork();
-      network.train([{ input: [0, 0, 0], output: [0] }, { input: [0, 0, 1], output: [0] }, { input: [1, 0, 0], output: [1] }, { input: [1, 1, 0], output: [1] }]);
-      var output = network.run([0, 1, 0]);
+      var network = new _brain2.default.recurrent.LSTM();
+
+      // const trainingData = this.props.wines.allWines.data.map(wine => ({
+      //   input: wine.description,
+      //   output: wine.country
+      // }));
+      // const cleanData = trainingData.filter(wine => wine.input !== null || wine.output !== null);
+
+      var data = [];
+      for (var i = 0; i < 7; i++) {
+        data.push({
+          input: this.props.wines.allWines.data[i].description,
+          output: this.props.wines.allWines.data[i].country
+        });
+      }
+      console.log("training data: ", data);
+      network.train(data, { iterations: 5 });
+      console.log("training data is over");
+      var output = network.run("The wine is sweet and red like its grapes from italy");
       console.log(output);
     }
   }, {
@@ -485,9 +507,9 @@ var PredictWine = function (_React$Component) {
     value: function handleSubmit(event) {
       event.preventDefault();
       console.log("Submitted!");
+      this.trainData();
       // this.props.addWine(this.state);
       // this.props.history.push("/winePredictor");
-      this.trainData();
     }
   }, {
     key: "render",
@@ -495,51 +517,55 @@ var PredictWine = function (_React$Component) {
       return _react2.default.createElement(
         "div",
         null,
-        _react2.default.createElement(
-          _Jumbotron2.default,
+        this.props.wines.allWines ? _react2.default.createElement(
+          "div",
           null,
           _react2.default.createElement(
-            "h1",
-            null,
-            "We will predict the wine for you!"
-          ),
-          _react2.default.createElement(
-            "p",
-            null,
-            "Describe what you taste and we will do the rest! Shazam for wines"
-          ),
-          _react2.default.createElement(
-            "p",
+            _Jumbotron2.default,
             null,
             _react2.default.createElement(
-              _reactRouterDom.Link,
-              { to: "/wines" },
+              "h1",
+              null,
+              "We will predict the wine for you!"
+            ),
+            _react2.default.createElement(
+              "p",
+              null,
+              "Describe what you taste and we will do the rest! Shazam for wines"
+            ),
+            _react2.default.createElement(
+              "p",
+              null,
               _react2.default.createElement(
-                _Button2.default,
-                { variant: "primary" },
-                "See all wines"
+                _reactRouterDom.Link,
+                { to: "/wines" },
+                _react2.default.createElement(
+                  _Button2.default,
+                  { variant: "primary" },
+                  "See all wines"
+                )
               )
             )
+          ),
+          _react2.default.createElement(
+            "form",
+            { onSubmit: this.handleSubmit },
+            _react2.default.createElement("textarea", { name: "description", onChange: this.handleChange, placeholder: "Description", rows: "4", cols: "50" }),
+            _react2.default.createElement("br", null),
+            _react2.default.createElement("input", { name: "userName", onChange: this.handleChange, placeholder: "user name" }),
+            _react2.default.createElement("br", null),
+            _react2.default.createElement("br", null),
+            this.state.description ? _react2.default.createElement(
+              "button",
+              { disabled: false, type: "submit" },
+              "Show me the wine!"
+            ) : _react2.default.createElement(
+              "button",
+              { disabled: true, type: "submit" },
+              "Show me the wine!"
+            )
           )
-        ),
-        _react2.default.createElement(
-          "form",
-          { onSubmit: this.handleSubmit },
-          _react2.default.createElement("textarea", { name: "description", onChange: this.handleChange, placeholder: "Description", rows: "4", cols: "50" }),
-          _react2.default.createElement("br", null),
-          _react2.default.createElement("input", { name: "userName", onChange: this.handleChange, placeholder: "user name" }),
-          _react2.default.createElement("br", null),
-          _react2.default.createElement("br", null),
-          this.state.description ? _react2.default.createElement(
-            "button",
-            { disabled: false, type: "submit" },
-            "Show me the wine!"
-          ) : _react2.default.createElement(
-            "button",
-            { disabled: true, type: "submit" },
-            "Show me the wine!"
-          )
-        )
+        ) : _react2.default.createElement(_Spinner2.default, { animation: "border", variant: "primary" })
       );
     }
   }]);
@@ -549,13 +575,16 @@ var PredictWine = function (_React$Component) {
 
 var mapState = function mapState(state) {
   return {
-    wine: state.wine
+    wines: state.wines
   };
 };
 var mapDisaptch = function mapDisaptch(dispatch) {
   return {
     addWine: function addWine(newWine) {
       return dispatch((0, _wine.addWine)(newWine));
+    },
+    getWines: function getWines() {
+      return dispatch((0, _wine.getAllWines)());
     }
   };
 };
@@ -65554,7 +65583,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
