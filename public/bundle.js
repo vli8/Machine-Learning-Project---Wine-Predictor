@@ -589,14 +589,15 @@ var PredictWineForm = function (_React$Component) {
               case 0:
                 event.preventDefault();
                 console.log("Submitted!");
-                // this.props.addWine(this.state);
-                _context2.next = 4;
+                this.props.addWine(this.state); //Adding a new wine to the database
+                _context2.next = 5;
                 return this.props.predictingWine(this.state);
 
-              case 4:
+              case 5:
+                //Not adding anything, just using a postroute to use req.body
                 this.props.history.push("/winePredictor");
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }
