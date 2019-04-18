@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { addWine, getAllWines, predictWine } from "../store/wine";
 import Spinner from "react-bootstrap/Spinner";
 
-class PredictWine extends React.Component {
+class PredictWineForm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -38,7 +38,7 @@ class PredictWine extends React.Component {
     event.preventDefault();
     console.log("Submitted!");
     // this.props.addWine(this.state);
-    this.props.predictingWine(this.state);
+    await this.props.predictingWine(this.state);
     this.props.history.push("/winePredictor");
   }
 
@@ -97,7 +97,7 @@ const mapDisaptch = dispatch => {
 export default connect(
   mapState,
   mapDisaptch
-)(PredictWine);
+)(PredictWineForm);
 
 // trainData() {
 //   const network = new brain.recurrent.LSTM();
