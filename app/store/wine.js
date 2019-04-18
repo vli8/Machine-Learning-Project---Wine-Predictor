@@ -5,6 +5,7 @@ import axios from "axios";
 const GET_ALL_WINES = "GET_ALL_WINES";
 const GET_SINGLE_WINE = "GET_SINGLE_WINE";
 const ADD_WINE = "ADD_WINE";
+const PREDICT_WINE = "PREDICT_WINE";
 
 /*---------------------------------------------------------------------------------------------*/
 
@@ -12,6 +13,7 @@ const ADD_WINE = "ADD_WINE";
 const getWines = wines => ({ type: GET_ALL_WINES, payload: wines });
 const getSingleWine = singleWine => ({ type: GET_SINGLE_WINE, payload: singleWine });
 const postWine = wineObj => ({ type: ADD_WINE, payload: wineObj });
+const predictWineCountry = wineDescription => ({ type: PREDICT_WINE, payload: wineDescription });
 
 /*---------------------------------------------------------------------------------------------*/
 
@@ -41,7 +43,17 @@ export const addWine = wineObj => async dispatch => {
     const actionWine = postWine(newWine);
     dispatch(actionWine);
   } catch (error) {
-    console.log("ERROR in thunk creator add wine", error);
+    console.log("ERROR in thunk creator add wine: ", error);
+  }
+};
+
+export const predictWine = wineDescription => async dispatch => {
+  try {
+    const wineCountry = await axios.post("/api/winePrediction", wineDescription);
+    const actionWinePrediction = predictWineCountry(wineCountry);
+    dispatch(actionWinePrediction);
+  } catch (error) {
+    console.log("error in predictwine redux: ", error);
   }
 };
 
@@ -57,6 +69,8 @@ export default function(state = defaultState, action) {
       return { ...state, allWines: state.allWines, selectedWine: action.payload };
     case ADD_WINE:
       return { ...state, newWine: action.payload };
+    case PREDICT_WINE:
+      return { ...state, wineToPredict: action.payload };
     default:
       return state;
   }

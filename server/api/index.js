@@ -37,11 +37,9 @@ router.post("/winePrediction", async (req, res, next) => {
     }
     network.train(trainingData, { iterations: 10 });
     console.log("finished training Data!!!");
-    const predictedCountry = network.run(
-      "Raw black-cherry aromas are direct and simple but good. This has a juicy feel that thickens over time, with oak character and extract becoming more apparent. A flavor profile driven by dark-berry fruits and smoldering oak finishes meaty but hot."
-    );
+    const predictedCountry = network.run(req.body.description);
     console.log(predictedCountry);
-    res.send(req.body);
+    res.send(predictedCountry);
   } catch (error) {
     console.log("error in wine prediction route", error);
   }

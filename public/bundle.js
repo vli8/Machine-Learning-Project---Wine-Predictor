@@ -492,10 +492,6 @@ var _Spinner = __webpack_require__(/*! react-bootstrap/Spinner */ "./node_module
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
-var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-var _axios2 = _interopRequireDefault(_axios);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -589,7 +585,7 @@ var PredictWine = function (_React$Component) {
                 event.preventDefault();
                 console.log("Submitted!");
                 // this.props.addWine(this.state);
-                _axios2.default.post("/api/winePrediction", this.state);
+                this.props.predictingWine(this.state);
                 this.props.history.push("/winePredictor");
 
               case 4:
@@ -680,6 +676,9 @@ var mapDisaptch = function mapDisaptch(dispatch) {
     },
     getWines: function getWines() {
       return dispatch((0, _wine.getAllWines)());
+    },
+    predictingWine: function predictingWine(description) {
+      return dispatch((0, _wine.predictWine)(description));
     }
   };
 };
@@ -1010,7 +1009,7 @@ exports.default = store;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addWine = exports.getSelectedWine = exports.getAllWines = undefined;
+exports.predictWine = exports.addWine = exports.getSelectedWine = exports.getAllWines = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -1025,6 +1024,8 @@ exports.default = function () {
       return _extends({}, state, { allWines: state.allWines, selectedWine: action.payload });
     case ADD_WINE:
       return _extends({}, state, { newWine: action.payload });
+    case PREDICT_WINE:
+      return _extends({}, state, { wineToPredict: action.payload });
     default:
       return state;
   }
@@ -1043,6 +1044,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 var GET_ALL_WINES = "GET_ALL_WINES";
 var GET_SINGLE_WINE = "GET_SINGLE_WINE";
 var ADD_WINE = "ADD_WINE";
+var PREDICT_WINE = "PREDICT_WINE";
 
 /*---------------------------------------------------------------------------------------------*/
 
@@ -1055,6 +1057,9 @@ var getSingleWine = function getSingleWine(singleWine) {
 };
 var postWine = function postWine(wineObj) {
   return { type: ADD_WINE, payload: wineObj };
+};
+var predictWineCountry = function predictWineCountry(wineDescription) {
+  return { type: PREDICT_WINE, payload: wineDescription };
 };
 
 /*---------------------------------------------------------------------------------------------*/
@@ -1163,7 +1168,7 @@ var addWine = exports.addWine = function addWine(wineObj) {
               _context3.prev = 8;
               _context3.t0 = _context3["catch"](0);
 
-              console.log("ERROR in thunk creator add wine", _context3.t0);
+              console.log("ERROR in thunk creator add wine: ", _context3.t0);
 
             case 11:
             case "end":
@@ -1175,6 +1180,46 @@ var addWine = exports.addWine = function addWine(wineObj) {
 
     return function (_x3) {
       return _ref3.apply(this, arguments);
+    };
+  }();
+};
+
+var predictWine = exports.predictWine = function predictWine(wineDescription) {
+  return function () {
+    var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(dispatch) {
+      var wineCountry, actionWinePrediction;
+      return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return _axios2.default.post("/api/winePrediction", wineDescription);
+
+            case 3:
+              wineCountry = _context4.sent;
+              actionWinePrediction = predictWineCountry(wineCountry);
+
+              dispatch(actionWinePrediction);
+              _context4.next = 11;
+              break;
+
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](0);
+
+              console.log("error in predictwine redux: ", _context4.t0);
+
+            case 11:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, undefined, [[0, 8]]);
+    }));
+
+    return function (_x4) {
+      return _ref4.apply(this, arguments);
     };
   }();
 };
