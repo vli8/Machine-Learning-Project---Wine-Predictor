@@ -16,8 +16,9 @@ router.get("/", async (req, res, next) => {
 
 /*-----------------------------------------------------------------*/
 
-router.get("/winePrediction", async (req, res, next) => {
+router.post("/winePrediction", async (req, res, next) => {
   try {
+    console.log("BODY: ", req.body);
     const allWines = await Wines.findAll({
       where: {
         country: {
@@ -40,7 +41,7 @@ router.get("/winePrediction", async (req, res, next) => {
       "Raw black-cherry aromas are direct and simple but good. This has a juicy feel that thickens over time, with oak character and extract becoming more apparent. A flavor profile driven by dark-berry fruits and smoldering oak finishes meaty but hot."
     );
     console.log(predictedCountry);
-    res.send(trainingData);
+    res.send(req.body);
   } catch (error) {
     console.log("error in wine prediction route", error);
   }

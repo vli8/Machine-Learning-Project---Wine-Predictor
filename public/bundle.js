@@ -492,6 +492,10 @@ var _Spinner = __webpack_require__(/*! react-bootstrap/Spinner */ "./node_module
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
@@ -576,12 +580,32 @@ var PredictWine = function (_React$Component) {
     }()
   }, {
     key: "handleSubmit",
-    value: function handleSubmit(event) {
-      event.preventDefault();
-      console.log("Submitted!");
-      // this.props.addWine(this.state);
-      this.props.history.push("/winePredictor");
-    }
+    value: function () {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(event) {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                event.preventDefault();
+                console.log("Submitted!");
+                // this.props.addWine(this.state);
+                _axios2.default.post("/api/winePrediction", this.state);
+                this.props.history.push("/winePredictor");
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function handleSubmit(_x2) {
+        return _ref2.apply(this, arguments);
+      }
+
+      return handleSubmit;
+    }()
   }, {
     key: "render",
     value: function render() {
@@ -40118,7 +40142,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

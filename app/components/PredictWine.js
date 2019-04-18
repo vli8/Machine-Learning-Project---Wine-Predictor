@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { addWine, getAllWines } from "../store/wine";
 import Spinner from "react-bootstrap/Spinner";
+import axios from "axios";
 
 class PredictWine extends React.Component {
   constructor() {
@@ -34,10 +35,11 @@ class PredictWine extends React.Component {
     console.log("state: ", this.state);
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     console.log("Submitted!");
     // this.props.addWine(this.state);
+    axios.post("/api/winePrediction", this.state);
     this.props.history.push("/winePredictor");
   }
 
