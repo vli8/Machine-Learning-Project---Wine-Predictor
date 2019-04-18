@@ -5,7 +5,8 @@
 # Get started
 -Create postgreSQL database matching with the package.json name.<br />
 -Download the csv dataset from kaggle and convert it into json or use the json version offered.<br />
--Backend build using API routes express.js, model built using Sequelize.<br />
--Front end built with react, axios, redux. <br />
+-Backend build using API routes express.js, model built using Sequelize etc...<br />
+-Front end built with react, axios, redux etc... <br />
+-Find all libraries used in the package.json file.  <br />
 -Machine learning using brain.js<br />
 
