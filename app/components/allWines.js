@@ -11,9 +11,7 @@ class AllWines extends React.Component {
     this.state = {};
   }
 
-  componentDidMount() {
-    this.props.getWines();
-  }
+  componentDidMount() {}
 
   render() {
     return (

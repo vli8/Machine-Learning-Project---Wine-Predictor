@@ -4,7 +4,6 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { addWine, getAllWines } from "../store/wine";
-import brain from "brain.js";
 import Spinner from "react-bootstrap/Spinner";
 
 class PredictWine extends React.Component {
@@ -35,35 +34,11 @@ class PredictWine extends React.Component {
     console.log("state: ", this.state);
   }
 
-  trainData() {
-    const network = new brain.recurrent.LSTM();
-
-    // const trainingData = this.props.wines.allWines.data.map(wine => ({
-    //   input: wine.description,
-    //   output: wine.country
-    // }));
-    // const cleanData = trainingData.filter(wine => wine.input !== null || wine.output !== null);
-
-    const data = [];
-    for (let i = 0; i < 7; i++) {
-      data.push({
-        input: this.props.wines.allWines.data[i].description,
-        output: this.props.wines.allWines.data[i].country
-      });
-    }
-    console.log("training data: ", data);
-    network.train(data, { iterations: 5 });
-    console.log("training data is over");
-    const output = network.run("The wine is sweet and red like its grapes from italy");
-    console.log(output);
-  }
-
   handleSubmit(event) {
     event.preventDefault();
     console.log("Submitted!");
-    this.trainData();
     // this.props.addWine(this.state);
-    // this.props.history.push("/winePredictor");
+    this.props.history.push("/winePredictor");
   }
 
   render() {
@@ -121,3 +96,28 @@ export default connect(
   mapState,
   mapDisaptch
 )(PredictWine);
+
+// trainData() {
+//   const network = new brain.recurrent.LSTM();
+
+//   // const trainingData = this.props.wines.allWines.data.map(wine => ({
+//   //   input: wine.description,
+//   //   output: wine.country
+//   // }));
+//   // const cleanData = trainingData.filter(wine => wine.input !== null || wine.output !== null);
+
+//   const data = [];
+//   for (let i = 0; i < 7; i++) {
+//     data.push({
+//       input: this.props.wines.allWines.data[i].description,
+//       output: this.props.wines.allWines.data[i].country
+//     });
+//   }
+//   console.log("training data: ", data);
+//   network.train(data, { iteration: 14 });
+//   console.log("training data is over");
+//   const output = network.run(
+//     "Tart and snappy, the flavors of lime flesh and rind dominate. Some green pineapple pokes through, with crisp acidity underscoring the flavors. The wine was all stainless-steel fermented."
+//   );
+//   console.log(output);
+// }
