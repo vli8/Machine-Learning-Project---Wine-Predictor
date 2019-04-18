@@ -37,8 +37,8 @@ class PredictWineForm extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     console.log("Submitted!");
-    // this.props.addWine(this.state);
-    await this.props.predictingWine(this.state);
+    this.props.addWine(this.state); //Adding a new wine to the database
+    await this.props.predictingWine(this.state); //Not adding anything, just using a postroute to use req.body
     this.props.history.push("/winePredictor");
   }
 

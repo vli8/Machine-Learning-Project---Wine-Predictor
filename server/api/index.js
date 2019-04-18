@@ -15,7 +15,8 @@ router.get("/", async (req, res, next) => {
 });
 
 /*-----------------------------------------------------------------*/
-
+//Use of req.body here, we are not injecting anything in the database
+//look for the post route on line 66 to know how to add something to the db
 router.post("/winePrediction", async (req, res, next) => {
   try {
     console.log("BODY: ", req.body);
@@ -46,7 +47,7 @@ router.post("/winePrediction", async (req, res, next) => {
 });
 
 /*-----------------------------------------------------------------*/
-
+//use of req.params.id to query through the database from the browser to the backend
 router.get("/:id", async (req, res, next) => {
   try {
     const singleWine = await Wines.findAll({
@@ -61,7 +62,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 /*-----------------------------------------------------------------*/
-
+//Adding a row to the database
 router.post("/addWine", async (req, res, next) => {
   try {
     console.log(req.body);
