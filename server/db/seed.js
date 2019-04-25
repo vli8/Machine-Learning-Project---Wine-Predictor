@@ -9,6 +9,7 @@ const seed = async () => {
   } catch (error) {
     console.log("ERROR: ", error);
   }
+  console.log("seeded!");
 };
 
 module.exports = seed;

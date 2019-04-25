@@ -1,8 +1,7 @@
 const router = require("express").Router();
 const { Wines, NewWines } = require("../db/index");
 const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
-const brain = require("brain.js");
+const network = require("../index.js");
 /*-----------------------------------------------------------------*/
 
 router.get("/", async (req, res, next) => {
@@ -15,30 +14,15 @@ router.get("/", async (req, res, next) => {
 });
 
 /*-----------------------------------------------------------------*/
-//Use of req.body here, we are not injecting anything in the database
+//Use of req.body here and machine learning brain.js,
+//we are not injecting anything in the database
 //look for the post route on line 66 to know how to add something to the db
 router.post("/winePrediction", async (req, res, next) => {
   try {
     console.log("BODY: ", req.body);
-    const allWines = await Wines.findAll({
-      where: {
-        country: {
-          [Op.ne]: null
-        }
-      }
-    });
-
-    const network = new brain.recurrent.LSTM();
-    const trainingData = [];
-    for (let i = 0; i < 30; i++) {
-      trainingData.push({
-        input: allWines[i].description,
-        output: allWines[i].country
-      });
-    }
-    network.train(trainingData, { iterations: 10 });
-    console.log("finished training Data!!!");
+    console.log("network: ", network);
     const predictedCountry = network.run(req.body.description);
+    console.log("finished running: ");
     console.log(predictedCountry);
     res.send(predictedCountry);
   } catch (error) {
