@@ -21,7 +21,8 @@ router.post("/winePrediction", async (req, res, next) => {
   try {
     console.log("BODY: ", req.body);
     console.log("network: ", network);
-    const predictedCountry = network.run(req.body.description);
+    console.log("RUN:", { [req.body.description]: 1 });
+    const predictedCountry = network.run({ [req.body.description]: 1 });
     console.log("finished running: ");
     console.log(predictedCountry);
     res.send(predictedCountry);

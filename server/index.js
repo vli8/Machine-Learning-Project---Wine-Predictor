@@ -8,7 +8,7 @@ const brain = require("brain.js");
 const { Wines } = require("./db/index");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const network = new brain.recurrent.LSTM();
+const network = new brain.NeuralNetwork();
 
 module.exports = network;
 
@@ -37,22 +37,28 @@ const startServerConnectDB = async () => {
 };
 
 const trainingData = async () => {
-  const allWines = await Wines.findAll({
-    where: {
-      country: {
-        [Op.ne]: null
+  try {
+    const allWines = await Wines.findAll({
+      where: {
+        country: {
+          [Op.ne]: null
+        }
       }
-    }
-  });
-
-  const trainingData = [];
-  for (let i = 0; i < 30; i++) {
-    trainingData.push({
-      input: allWines[i].description,
-      output: allWines[i].country
     });
+
+    const trainingData = [];
+    for (let i = 0; i < allWines.length; i++) {
+      const descriptionOfWine = allWines[i].description;
+      const countryWine = allWines[i].country;
+      trainingData.push({
+        input: { [descriptionOfWine]: 1 },
+        output: { [countryWine]: 1 }
+      });
+    }
+    await network.train(trainingData, { hiddenLayers: [3] });
+    console.log("finished training Data!!!");
+  } catch (error) {
+    console.log("Error in traininData(): ", error);
   }
-  await network.train(trainingData, { iterations: 10 });
-  console.log("finished training Data!!!");
 };
 startServerConnectDB();

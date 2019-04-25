@@ -941,6 +941,10 @@ var _Spinner = __webpack_require__(/*! react-bootstrap/Spinner */ "./node_module
 
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
+var _ListGroup = __webpack_require__(/*! react-bootstrap/ListGroup */ "./node_modules/react-bootstrap/ListGroup.js");
+
+var _ListGroup2 = _interopRequireDefault(_ListGroup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -979,8 +983,59 @@ var WinePrediction = function (_React$Component) {
             _react2.default.createElement(
               "h1",
               null,
-              "The wine that you describe is from: ",
-              this.props.wines.wineToPredict.data
+              "Here are the probabilities of the country of origin of your wine based on your description"
+            ),
+            _react2.default.createElement(
+              _ListGroup2.default,
+              null,
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "1" },
+                "Italy: ",
+                this.props.wines.wineToPredict.data.Italy
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "2" },
+                "Argentina: ",
+                this.props.wines.wineToPredict.data.Argentina
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "3" },
+                "Portugal: ",
+                this.props.wines.wineToPredict.data.Portugal
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "4" },
+                "US: ",
+                this.props.wines.wineToPredict.data.US
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "5" },
+                "Spain: ",
+                this.props.wines.wineToPredict.data.Spain
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "6" },
+                "France: ",
+                this.props.wines.wineToPredict.data.France
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "7" },
+                "Germany: ",
+                this.props.wines.wineToPredict.data.Germany
+              ),
+              _react2.default.createElement(
+                _ListGroup2.default.Item,
+                { key: "8" },
+                "Chile: ",
+                this.props.wines.wineToPredict.data.Chile
+              )
             ),
             _react2.default.createElement(
               "p",
@@ -1634,6 +1689,157 @@ function forwardRef(renderFn, _temp) {
     propTypes: propTypes,
     defaultProps: defaultProps
   });
+}
+
+/***/ }),
+
+/***/ "./node_modules/@restart/context/mapContextToProps.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@restart/context/mapContextToProps.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = mapContextToProps;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _forwardRef = _interopRequireDefault(__webpack_require__(/*! ./forwardRef */ "./node_modules/@restart/context/forwardRef.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+var getDisplayName = function getDisplayName(Component) {
+  var name = typeof Component === 'string' ? Component : Component.name || Component.displayName;
+  return name ? "ContextTransform(" + name + ")" : 'ContextTransform';
+};
+
+var ensureConsumer = function ensureConsumer(c) {
+  return c.Consumer || c;
+};
+
+function $mapContextToProps(_ref, Component) {
+  var maybeArrayOfConsumers = _ref.consumers,
+      mapToProps = _ref.mapToProps,
+      displayName = _ref.displayName,
+      _ref$forwardRefAs = _ref.forwardRefAs,
+      forwardRefAs = _ref$forwardRefAs === void 0 ? 'ref' : _ref$forwardRefAs;
+  var consumers = maybeArrayOfConsumers;
+
+  if (!Array.isArray(maybeArrayOfConsumers)) {
+    consumers = [maybeArrayOfConsumers];
+  }
+
+  var SingleConsumer = ensureConsumer(consumers[0]);
+
+  function singleRender(props, ref) {
+    var _extends2;
+
+    var propsWithRef = _extends((_extends2 = {}, _extends2[forwardRefAs] = ref, _extends2), props);
+
+    return _react.default.createElement(SingleConsumer, null, function (value) {
+      return _react.default.createElement(Component, _extends({}, propsWithRef, mapToProps(value, props)));
+    });
+  }
+
+  function multiRender(props, ref) {
+    var _extends3;
+
+    var propsWithRef = _extends((_extends3 = {}, _extends3[forwardRefAs] = ref, _extends3), props);
+
+    return consumers.reduceRight(function (inner, Context) {
+      return function () {
+        for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+          args[_key] = arguments[_key];
+        }
+
+        var Consumer = ensureConsumer(Context);
+        return _react.default.createElement(Consumer, null, function (value) {
+          return inner.apply(void 0, args.concat([value]));
+        });
+      };
+    }, function () {
+      for (var _len2 = arguments.length, contexts = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        contexts[_key2] = arguments[_key2];
+      }
+
+      return _react.default.createElement(Component, _extends({}, propsWithRef, mapToProps.apply(void 0, contexts.concat([props]))));
+    })();
+  }
+
+  var contextTransform = consumers.length === 1 ? singleRender : multiRender;
+  return (0, _forwardRef.default)(contextTransform, {
+    displayName: displayName || getDisplayName(Component)
+  });
+}
+
+function mapContextToProps(maybeOpts, mapToProps, Component) {
+  if (arguments.length === 2) return $mapContextToProps(maybeOpts, mapToProps);
+  return $mapContextToProps({
+    consumers: maybeOpts,
+    mapToProps: mapToProps
+  }, Component);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@restart/hooks/useCommittedRef.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@restart/hooks/useCommittedRef.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+function useCommittedRef(value) {
+  const ref = (0, _react.useRef)(value);
+  (0, _react.useLayoutEffect)(() => {
+    ref.current = value;
+  }, [value]);
+  return ref;
+}
+
+var _default = useCommittedRef;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/@restart/hooks/useEventCallback.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@restart/hooks/useEventCallback.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = useEventCallback;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _useCommittedRef = _interopRequireDefault(__webpack_require__(/*! ./useCommittedRef */ "./node_modules/@restart/hooks/useCommittedRef.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function useEventCallback(fn) {
+  const ref = (0, _useCommittedRef.default)(fn);
+  return (0, _react.useCallback)(function (...args) {
+    return ref.current(...args);
+  }, [ref]);
 }
 
 /***/ }),
@@ -14629,6 +14835,48 @@ module.exports = exports['default'];
 
 /***/ }),
 
+/***/ "./node_modules/dom-helpers/query/querySelectorAll.js":
+/*!************************************************************!*\
+  !*** ./node_modules/dom-helpers/query/querySelectorAll.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = qsa;
+// Zepto.js
+// (c) 2010-2015 Thomas Fuchs
+// Zepto.js may be freely distributed under the MIT license.
+var simpleSelectorRE = /^[\w-]*$/;
+var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
+
+function qsa(element, selector) {
+  var maybeID = selector[0] === '#',
+      maybeClass = selector[0] === '.',
+      nameOnly = maybeID || maybeClass ? selector.slice(1) : selector,
+      isSimple = simpleSelectorRE.test(nameOnly),
+      found;
+
+  if (isSimple) {
+    if (maybeID) {
+      element = element.getElementById ? element : document;
+      return (found = element.getElementById(nameOnly)) ? [found] : [];
+    }
+
+    if (element.getElementsByClassName && maybeClass) return toArray(element.getElementsByClassName(nameOnly));
+    return toArray(element.getElementsByTagName(selector));
+  }
+
+  return toArray(element.querySelectorAll(selector));
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./node_modules/dom-helpers/util/camelize.js":
 /*!***************************************************!*\
   !*** ./node_modules/dom-helpers/util/camelize.js ***!
@@ -16995,6 +17243,277 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
+/***/ "./node_modules/react-bootstrap/AbstractNav.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/react-bootstrap/AbstractNav.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _querySelectorAll = _interopRequireDefault(__webpack_require__(/*! dom-helpers/query/querySelectorAll */ "./node_modules/dom-helpers/query/querySelectorAll.js"));
+
+var _mapContextToProps = _interopRequireDefault(__webpack_require__(/*! @restart/context/mapContextToProps */ "./node_modules/@restart/context/mapContextToProps.js"));
+
+var _SelectableContext = _interopRequireWildcard(__webpack_require__(/*! ./SelectableContext */ "./node_modules/react-bootstrap/SelectableContext.js"));
+
+var _NavContext = _interopRequireDefault(__webpack_require__(/*! ./NavContext */ "./node_modules/react-bootstrap/NavContext.js"));
+
+var _TabContext = _interopRequireDefault(__webpack_require__(/*! ./TabContext */ "./node_modules/react-bootstrap/TabContext.js"));
+
+var noop = function noop() {};
+
+var AbstractNav =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(AbstractNav, _React$Component);
+
+  function AbstractNav() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+
+    _this.handleSelect = function (key, event) {
+      var _this$props = _this.props,
+          onSelect = _this$props.onSelect,
+          parentOnSelect = _this$props.parentOnSelect;
+      if (key == null) return;
+      if (onSelect) onSelect(key, event);
+      if (parentOnSelect) parentOnSelect(key, event);
+    };
+
+    _this.handleKeyDown = function (event) {
+      var onKeyDown = _this.props.onKeyDown;
+      if (onKeyDown) onKeyDown(event);
+      var nextActiveChild;
+
+      switch (event.key) {
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          nextActiveChild = _this.getNextActiveChild(-1);
+          break;
+
+        case 'ArrowRight':
+        case 'ArrowDown':
+          nextActiveChild = _this.getNextActiveChild(1);
+          break;
+
+        default:
+          return;
+      }
+
+      if (!nextActiveChild) return;
+      event.preventDefault();
+
+      _this.handleSelect(nextActiveChild.dataset.rbEventKey, event);
+
+      _this._needsRefocus = true;
+    };
+
+    _this.attachRef = function (ref) {
+      _this.listNode = ref;
+    };
+
+    _this.state = {
+      navContext: null
+    };
+    return _this;
+  }
+
+  AbstractNav.getDerivedStateFromProps = function getDerivedStateFromProps(_ref) {
+    var activeKey = _ref.activeKey,
+        getControlledId = _ref.getControlledId,
+        getControllerId = _ref.getControllerId,
+        role = _ref.role;
+    return {
+      navContext: {
+        role: role,
+        // used by NavLink to determine it's role
+        activeKey: (0, _SelectableContext.makeEventKey)(activeKey),
+        getControlledId: getControlledId || noop,
+        getControllerId: getControllerId || noop
+      }
+    };
+  };
+
+  var _proto = AbstractNav.prototype;
+
+  _proto.componentDidUpdate = function componentDidUpdate() {
+    if (!this._needsRefocus || !this.listNode) return;
+    var activeChild = this.listNode.querySelector('[data-rb-event-key].active');
+    if (activeChild) activeChild.focus();
+  };
+
+  _proto.getNextActiveChild = function getNextActiveChild(offset) {
+    if (!this.listNode) return null;
+    var items = (0, _querySelectorAll.default)(this.listNode, '[data-rb-event-key]:not(.disabled)');
+    var activeChild = this.listNode.querySelector('.active');
+    var index = items.indexOf(activeChild);
+    if (index === -1) return null;
+    var nextIndex = index + offset;
+    if (nextIndex >= items.length) nextIndex = 0;
+    if (nextIndex < 0) nextIndex = items.length - 1;
+    return items[nextIndex];
+  };
+
+  _proto.render = function render() {
+    var _this$props2 = this.props,
+        Component = _this$props2.as,
+        _ = _this$props2.onSelect,
+        _0 = _this$props2.parentOnSelect,
+        _1 = _this$props2.getControlledId,
+        _2 = _this$props2.getControllerId,
+        _3 = _this$props2.activeKey,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props2, ["as", "onSelect", "parentOnSelect", "getControlledId", "getControllerId", "activeKey"]);
+
+    if (props.role === 'tablist') {
+      props.onKeyDown = this.handleKeyDown;
+    }
+
+    return _react.default.createElement(_SelectableContext.default.Provider, {
+      value: this.handleSelect
+    }, _react.default.createElement(_NavContext.default.Provider, {
+      value: this.state.navContext
+    }, _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+      onKeyDown: this.handleKeyDown,
+      ref: this.attachRef
+    }))));
+  };
+
+  return AbstractNav;
+}(_react.default.Component);
+
+AbstractNav.defaultProps = {
+  as: 'ul'
+};
+
+var _default = (0, _mapContextToProps.default)([_SelectableContext.default, _TabContext.default], function (parentOnSelect, tabContext, _ref2) {
+  var role = _ref2.role;
+  if (!tabContext) return {
+    parentOnSelect: parentOnSelect
+  };
+  var activeKey = tabContext.activeKey,
+      getControllerId = tabContext.getControllerId,
+      getControlledId = tabContext.getControlledId;
+  return {
+    activeKey: activeKey,
+    parentOnSelect: parentOnSelect,
+    role: role || 'tablist',
+    // pass these two through to avoid having to listen to
+    // both Tab and Nav contexts in NavLink
+    getControllerId: getControllerId,
+    getControlledId: getControlledId
+  };
+}, AbstractNav);
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/AbstractNavItem.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/react-bootstrap/AbstractNavItem.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireWildcard = __webpack_require__(/*! @babel/runtime/helpers/interopRequireWildcard */ "./node_modules/@babel/runtime/helpers/interopRequireWildcard.js");
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _useEventCallback = _interopRequireDefault(__webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/hooks/useEventCallback.js"));
+
+var _NavContext = _interopRequireDefault(__webpack_require__(/*! ./NavContext */ "./node_modules/react-bootstrap/NavContext.js"));
+
+var _SelectableContext = _interopRequireWildcard(__webpack_require__(/*! ./SelectableContext */ "./node_modules/react-bootstrap/SelectableContext.js"));
+
+var defaultProps = {
+  disabled: false
+};
+
+var AbstractNavItem = _react.default.forwardRef(function (_ref, ref) {
+  var active = _ref.active,
+      className = _ref.className,
+      tabIndex = _ref.tabIndex,
+      eventKey = _ref.eventKey,
+      onSelect = _ref.onSelect,
+      onClick = _ref.onClick,
+      Component = _ref.as,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["active", "className", "tabIndex", "eventKey", "onSelect", "onClick", "as"]);
+  var navKey = (0, _SelectableContext.makeEventKey)(eventKey, props.href);
+  var parentOnSelect = (0, _react.useContext)(_SelectableContext.default);
+  var navContext = (0, _react.useContext)(_NavContext.default);
+  var isActive = active;
+
+  if (navContext) {
+    if (!props.role && navContext.role === 'tablist') props.role = 'tab';
+    props['data-rb-event-key'] = navKey;
+    props.id = navContext.getControllerId(navKey);
+    props['aria-controls'] = navContext.getControlledId(navKey);
+    isActive = active == null && navKey != null ? navContext.activeKey === navKey : active;
+  }
+
+  if (props.role === 'tab') {
+    props.tabIndex = isActive ? tabIndex : -1;
+    props['aria-selected'] = isActive;
+  }
+
+  var handleOnclick = (0, _useEventCallback.default)(function (e) {
+    if (onClick) onClick(e);
+    if (navKey == null) return;
+    if (onSelect) onSelect(navKey, e);
+    if (parentOnSelect) parentOnSelect(navKey, e);
+  });
+  return _react.default.createElement(Component, (0, _extends2.default)({}, props, {
+    ref: ref,
+    onClick: handleOnclick,
+    className: (0, _classnames.default)(className, isActive && 'active')
+  }));
+});
+
+AbstractNavItem.defaultProps = defaultProps;
+var _default = AbstractNavItem;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./node_modules/react-bootstrap/Button.js":
 /*!************************************************!*\
   !*** ./node_modules/react-bootstrap/Button.js ***!
@@ -17356,6 +17875,203 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./node_modules/react-bootstrap/ListGroup.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-bootstrap/ListGroup.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _uncontrollable = _interopRequireDefault(__webpack_require__(/*! uncontrollable */ "./node_modules/uncontrollable/index.js"));
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var _AbstractNav = _interopRequireDefault(__webpack_require__(/*! ./AbstractNav */ "./node_modules/react-bootstrap/AbstractNav.js"));
+
+var _ListGroupItem = _interopRequireDefault(__webpack_require__(/*! ./ListGroupItem */ "./node_modules/react-bootstrap/ListGroupItem.js"));
+
+var ListGroup =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(ListGroup, _React$Component);
+
+  function ListGroup() {
+    return _React$Component.apply(this, arguments) || this;
+  }
+
+  var _proto = ListGroup.prototype;
+
+  _proto.render = function render() {
+    var _this$props = this.props,
+        className = _this$props.className,
+        bsPrefix = _this$props.bsPrefix,
+        variant = _this$props.variant,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props, ["className", "bsPrefix", "variant"]);
+    return _react.default.createElement(_AbstractNav.default, (0, _extends2.default)({}, props, {
+      className: (0, _classnames.default)(className, bsPrefix, variant && bsPrefix + "-" + variant)
+    }));
+  };
+
+  return ListGroup;
+}(_react.default.Component);
+
+ListGroup.defaultProps = {
+  as: 'div',
+  variant: null
+};
+var DecoratedListGroup = (0, _uncontrollable.default)((0, _ThemeProvider.createBootstrapComponent)(ListGroup, 'list-group'), {
+  activeKey: 'onSelect'
+});
+DecoratedListGroup.Item = _ListGroupItem.default;
+var _default = DecoratedListGroup;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/ListGroupItem.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/ListGroupItem.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/extends */ "./node_modules/@babel/runtime/helpers/extends.js"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js"));
+
+var _inheritsLoose2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/inheritsLoose */ "./node_modules/@babel/runtime/helpers/inheritsLoose.js"));
+
+var _classnames = _interopRequireDefault(__webpack_require__(/*! classnames */ "./node_modules/classnames/index.js"));
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _AbstractNavItem = _interopRequireDefault(__webpack_require__(/*! ./AbstractNavItem */ "./node_modules/react-bootstrap/AbstractNavItem.js"));
+
+var _SelectableContext = __webpack_require__(/*! ./SelectableContext */ "./node_modules/react-bootstrap/SelectableContext.js");
+
+var _ThemeProvider = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/ThemeProvider.js");
+
+var ListGroupItem =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inheritsLoose2.default)(ListGroupItem, _React$Component);
+
+  function ListGroupItem() {
+    var _this;
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+
+    _this.handleClick = function (event) {
+      var _this$props = _this.props,
+          onClick = _this$props.onClick,
+          disabled = _this$props.disabled;
+
+      if (disabled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      if (onClick) onClick(event);
+    };
+
+    return _this;
+  }
+
+  var _proto = ListGroupItem.prototype;
+
+  _proto.render = function render() {
+    var _this$props2 = this.props,
+        bsPrefix = _this$props2.bsPrefix,
+        active = _this$props2.active,
+        disabled = _this$props2.disabled,
+        className = _this$props2.className,
+        variant = _this$props2.variant,
+        action = _this$props2.action,
+        as = _this$props2.as,
+        eventKey = _this$props2.eventKey,
+        props = (0, _objectWithoutPropertiesLoose2.default)(_this$props2, ["bsPrefix", "active", "disabled", "className", "variant", "action", "as", "eventKey"]);
+    return _react.default.createElement(_AbstractNavItem.default, (0, _extends2.default)({}, props, {
+      eventKey: (0, _SelectableContext.makeEventKey)(eventKey, props.href) // eslint-disable-next-line
+      ,
+      as: as || (action ? props.href ? 'a' : 'button' : 'div'),
+      onClick: this.handleClick,
+      className: (0, _classnames.default)(className, bsPrefix, active && 'active', disabled && 'disabled', variant && bsPrefix + "-" + variant, action && bsPrefix + "-action")
+    }));
+  };
+
+  return ListGroupItem;
+}(_react.default.Component);
+
+ListGroupItem.defaultProps = {
+  variant: null,
+  active: false,
+  disabled: false
+};
+
+var _default = (0, _ThemeProvider.createBootstrapComponent)(ListGroupItem, 'list-group-item');
+
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/NavContext.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-bootstrap/NavContext.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var NavContext = _react.default.createContext(null);
+
+var _default = NavContext;
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
 /***/ "./node_modules/react-bootstrap/SafeAnchor.js":
 /*!****************************************************!*\
   !*** ./node_modules/react-bootstrap/SafeAnchor.js ***!
@@ -17479,6 +18195,36 @@ module.exports = exports["default"];
 
 /***/ }),
 
+/***/ "./node_modules/react-bootstrap/SelectableContext.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-bootstrap/SelectableContext.js ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = exports.makeEventKey = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var SelectableContext = _react.default.createContext();
+
+var makeEventKey = function makeEventKey(eventKey, href) {
+  if (eventKey != null) return String(eventKey);
+  return href || null;
+};
+
+exports.makeEventKey = makeEventKey;
+var _default = SelectableContext;
+exports.default = _default;
+
+/***/ }),
+
 /***/ "./node_modules/react-bootstrap/Spinner.js":
 /*!*************************************************!*\
   !*** ./node_modules/react-bootstrap/Spinner.js ***!
@@ -17543,6 +18289,31 @@ Spinner.defaultProps = {
 
 var _default = (0, _ThemeProvider.createBootstrapComponent)(Spinner, 'spinner');
 
+exports.default = _default;
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/TabContext.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-bootstrap/TabContext.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var TabContext = _react.default.createContext(null);
+
+var _default = TabContext;
 exports.default = _default;
 module.exports = exports["default"];
 
@@ -40314,7 +41085,7 @@ function warning(message) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45867,6 +46638,262 @@ function warning(condition, message) {
 
 /* harmony default export */ __webpack_exports__["default"] = (warning);
 
+
+/***/ }),
+
+/***/ "./node_modules/uncontrollable/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/uncontrollable/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = uncontrollable;
+
+var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+var _invariant = _interopRequireDefault(__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js"));
+
+var Utils = _interopRequireWildcard(__webpack_require__(/*! ./utils */ "./node_modules/uncontrollable/utils.js"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+function uncontrollable(Component, controlledValues, methods) {
+  if (methods === void 0) {
+    methods = [];
+  }
+
+  var displayName = Component.displayName || Component.name || 'Component';
+  var canAcceptRef = Utils.canAcceptRef(Component);
+  var controlledProps = Object.keys(controlledValues);
+  var PROPS_TO_OMIT = controlledProps.map(Utils.defaultKey);
+  !(canAcceptRef || !methods.length) ?  true ? (0, _invariant.default)(false, '[uncontrollable] stateless function components cannot pass through methods ' + 'because they have no associated instances. Check component: ' + displayName + ', ' + 'attempting to pass through methods: ' + methods.join(', ')) : undefined : void 0;
+
+  var UncontrolledComponent =
+  /*#__PURE__*/
+  function (_React$Component) {
+    _inheritsLoose(UncontrolledComponent, _React$Component);
+
+    function UncontrolledComponent() {
+      var _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _React$Component.call.apply(_React$Component, [this].concat(args)) || this;
+      _this.handlers = Object.create(null);
+      controlledProps.forEach(function (propName) {
+        var handlerName = controlledValues[propName];
+
+        var handleChange = function handleChange(value) {
+          if (_this.props[handlerName]) {
+            var _this$props;
+
+            _this._notifying = true;
+
+            for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+              args[_key2 - 1] = arguments[_key2];
+            }
+
+            (_this$props = _this.props)[handlerName].apply(_this$props, [value].concat(args));
+
+            _this._notifying = false;
+          }
+
+          _this._values[propName] = value;
+          if (!_this.unmounted) _this.forceUpdate();
+        };
+
+        _this.handlers[handlerName] = handleChange;
+      });
+      if (methods.length) _this.attachRef = function (ref) {
+        _this.inner = ref;
+      };
+      return _this;
+    }
+
+    var _proto = UncontrolledComponent.prototype;
+
+    _proto.shouldComponentUpdate = function shouldComponentUpdate() {
+      //let the forceUpdate trigger the update
+      return !this._notifying;
+    };
+
+    _proto.componentWillMount = function componentWillMount() {
+      var _this2 = this;
+
+      var props = this.props;
+      this._values = Object.create(null);
+      controlledProps.forEach(function (key) {
+        _this2._values[key] = props[Utils.defaultKey(key)];
+      });
+    };
+
+    _proto.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+      var _this3 = this;
+
+      var props = this.props;
+      controlledProps.forEach(function (key) {
+        /**
+         * If a prop switches from controlled to Uncontrolled
+         * reset its value to the defaultValue
+         */
+        if (!Utils.isProp(nextProps, key) && Utils.isProp(props, key)) {
+          _this3._values[key] = nextProps[Utils.defaultKey(key)];
+        }
+      });
+    };
+
+    _proto.componentWillUnmount = function componentWillUnmount() {
+      this.unmounted = true;
+    };
+
+    _proto.render = function render() {
+      var _this4 = this;
+
+      var _this$props2 = this.props,
+          innerRef = _this$props2.innerRef,
+          props = _objectWithoutPropertiesLoose(_this$props2, ["innerRef"]);
+
+      PROPS_TO_OMIT.forEach(function (prop) {
+        delete props[prop];
+      });
+      var newProps = {};
+      controlledProps.forEach(function (propName) {
+        var propValue = _this4.props[propName];
+        newProps[propName] = propValue !== undefined ? propValue : _this4._values[propName];
+      });
+      return _react.default.createElement(Component, _extends({}, props, newProps, this.handlers, {
+        ref: innerRef || this.attachRef
+      }));
+    };
+
+    return UncontrolledComponent;
+  }(_react.default.Component);
+
+  UncontrolledComponent.displayName = "Uncontrolled(" + displayName + ")";
+  UncontrolledComponent.propTypes = _extends({
+    innerRef: function innerRef() {}
+  }, Utils.uncontrolledPropTypes(controlledValues, displayName));
+  methods.forEach(function (method) {
+    UncontrolledComponent.prototype[method] = function $proxiedMethod() {
+      var _this$inner;
+
+      return (_this$inner = this.inner)[method].apply(_this$inner, arguments);
+    };
+  });
+  var WrappedComponent = UncontrolledComponent;
+
+  if (_react.default.forwardRef) {
+    WrappedComponent = _react.default.forwardRef(function (props, ref) {
+      return _react.default.createElement(UncontrolledComponent, _extends({}, props, {
+        innerRef: ref
+      }));
+    });
+    WrappedComponent.propTypes = UncontrolledComponent.propTypes;
+  }
+
+  WrappedComponent.ControlledComponent = Component;
+  /**
+   * useful when wrapping a Component and you want to control
+   * everything
+   */
+
+  WrappedComponent.deferControlTo = function (newComponent, additions, nextMethods) {
+    if (additions === void 0) {
+      additions = {};
+    }
+
+    return uncontrollable(newComponent, _extends({}, controlledValues, additions), nextMethods);
+  };
+
+  return WrappedComponent;
+}
+
+module.exports = exports["default"];
+
+/***/ }),
+
+/***/ "./node_modules/uncontrollable/utils.js":
+/*!**********************************************!*\
+  !*** ./node_modules/uncontrollable/utils.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.uncontrolledPropTypes = uncontrolledPropTypes;
+exports.isProp = isProp;
+exports.defaultKey = defaultKey;
+exports.canAcceptRef = canAcceptRef;
+
+var _invariant = _interopRequireDefault(__webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var noop = function noop() {};
+
+function readOnlyPropType(handler, name) {
+  return function (props, propName) {
+    if (props[propName] !== undefined) {
+      if (!props[handler]) {
+        return new Error("You have provided a `" + propName + "` prop to `" + name + "` " + ("without an `" + handler + "` handler prop. This will render a read-only field. ") + ("If the field should be mutable use `" + defaultKey(propName) + "`. ") + ("Otherwise, set `" + handler + "`."));
+      }
+    }
+  };
+}
+
+function uncontrolledPropTypes(controlledValues, displayName) {
+  var propTypes = {};
+  Object.keys(controlledValues).forEach(function (prop) {
+    // add default propTypes for folks that use runtime checks
+    propTypes[defaultKey(prop)] = noop;
+
+    if (true) {
+      var handler = controlledValues[prop];
+      !(typeof handler === 'string' && handler.trim().length) ?  true ? (0, _invariant.default)(false, 'Uncontrollable - [%s]: the prop `%s` needs a valid handler key name in order to make it uncontrollable', displayName, prop) : undefined : void 0;
+      propTypes[prop] = readOnlyPropType(handler, displayName);
+    }
+  });
+  return propTypes;
+}
+
+function isProp(props, prop) {
+  return props[prop] !== undefined;
+}
+
+function defaultKey(key) {
+  return 'default' + key.charAt(0).toUpperCase() + key.substr(1);
+}
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+
+function canAcceptRef(component) {
+  return !!component && (typeof component !== 'function' || component.prototype && component.prototype.isReactComponent);
+}
 
 /***/ }),
 
