@@ -55,8 +55,9 @@ const trainingData = async () => {
         output: { [countryWine]: 1 }
       });
     }
-    await network.train(trainingData, { hiddenLayers: [3] });
-    console.log("finished training Data!!!");
+    const errorAndIteration = await network.train(trainingData, { hiddenLayers: [3] });
+    console.log("finished training Data:");
+    console.log(errorAndIteration);
   } catch (error) {
     console.log("Error in traininData(): ", error);
   }
